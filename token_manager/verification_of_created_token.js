@@ -1,7 +1,7 @@
 module.exports = (req,res,next) =>{
     const scrypt = require("bcrypt")
-    const authorization = req.header.authorization
-    if(req.header.authorization == undefined || req.header.authorization == ""){
+    const authorization = req.header.Authorization
+    if(req.header.authorization == undefined || req.header.Authorization == ""){
         const message = "Vous n'avez pas les authorisations nécessaires pour ceeder à cette ressources"
         return res.status(400).json({message})
     }else{
@@ -10,7 +10,7 @@ module.exports = (req,res,next) =>{
             return res.status(401).json({message})
         }
         try {
-            scrypt.compare(atob(req.cookies("username_login_for_travel_agency")),authorization.split(" ")[1]).then((a)=>{
+            scrypt.compare(req.cookies("username_login_for_travel_agency"),authorization.split(" ")[1]).then((a)=>{
                 if(a){
                     next()
                 }else{

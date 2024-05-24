@@ -1,4 +1,3 @@
-
 module.exports = (app,bcrypt,model) =>{
     app.post("/login",(req,res) =>{
         const all_client_information = [{name : "mail",value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe}]
@@ -16,8 +15,8 @@ module.exports = (app,bcrypt,model) =>{
                 }else{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
-                            const token = await require("../token_manager/build_token")(res)
-                            console.log(JSON.stringify(token))
+                            const token = require("../token_manager/create_random_value")(res,"usename_to_navigate_and_register_on_bd")
+                            // console.log(JSON.stringify(token))
                             const message = "Connexion reussi"
                             return res.json({message,token})
                         }else{
