@@ -1,7 +1,8 @@
 module.exports = (app,model_utilisateur) =>{
+    const nodemailer = require("nodemailer")
     app.post("/number_generator/:mail",(req,res)=>{
         try {
-            if(!mail){
+            if(!req.params.mail){
                 const message = "Veuillez ajouter l'adresse mail pour l'envoi du code"
                 return res.status(400).json({message})
             }
@@ -13,8 +14,7 @@ module.exports = (app,model_utilisateur) =>{
                     }else{
                         const v = Math.floor(Math.random()* (999999 - 100000))  + 100000
                         const smtpConfig = nodemailer.createTransport({
-                                host : "smtp.gmail.com",
-                                port : 587,
+                                service : "gmail",
                                 auth : {
                                     user : "wnomena58@gmail.com",
                                     pass : "Fifaliana2712@"
@@ -22,13 +22,14 @@ module.exports = (app,model_utilisateur) =>{
                         });
                         const message = {
                             from : "wnomena58@gmail.com",
-                            to : mail,
+                            to : req.params.mail,
                             subject : "Réinitialisation de mot de passe",
                             text : `Veuillez copier le code dans le page pour pouvoir réinitialiser votre mot de passe : ${Math.floor(v)}`
                         };
                         smtpConfig.sendMail(message,(err,info)=>{
                             if(err){
-                                const message = "Il y a une erreur lors de l'envoi du mail"
+                                const message = "Il y a une erreur lors de l'envoi du mail : " + err 
+                                console.log(err)
                                 return res.status(500).json({message})
                             }else {
                                 let token_update_password = require("../../token_manager/create_random_value")(res,"update_pass_during_30_second")
@@ -54,7 +55,7 @@ module.exports = (app,model_utilisateur) =>{
                 })
             }
         } catch (error) {
-            const message = "Erreur  lors de l'envoi de mail automatique"
+            const message = "Erreur  lors de l'envoi de mail automatique :: " + error
             return res.status(500).json({message})
         }
     })

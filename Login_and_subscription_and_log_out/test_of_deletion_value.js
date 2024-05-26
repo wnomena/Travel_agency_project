@@ -4,7 +4,7 @@ module.exports = (app,model) =>{
             a.forEach(element => {
              model.deleteOne({mail : element.mail}).then((b)=>{
                 console.log(b)
-             })   
+             })
             });
             const message = "Toutes les données ont été effacer"
             return res.json({message})
