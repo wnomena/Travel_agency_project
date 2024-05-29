@@ -1,13 +1,12 @@
-module.exports = (app,model_utilisateur) =>{
-    const nodemailer = require("nodemailer")
-    app.post("/number_generator/:mail",(req,res)=>{
+module.exports = (app,member_model) =>{
+    app.post("/send_mail/member",(req,res)=>{
         try {
-            if(!req.params.mail){
+            if(!req.body.mail){
                 const message = "Veuillez ajouter l'adresse mail pour l'envoi du code"
                 return res.status(400).json({message})
             }
             else{
-                model_utilisateur.find({mail : btoa(req.params.mail)}).then((a)=>{
+                member_model.find({mail : btoa(req.body.mail)}).then((a)=>{
                     if(a == "" || a == []){
                         const message = "Vérifier votre adresse mail"
                         return res.status(401).json({message})
@@ -32,7 +31,7 @@ module.exports = (app,model_utilisateur) =>{
                                 console.log(err)
                                 return res.status(500).json({message})
                             }else {
-                                model_utilisateur.findByIdAndUpdate(a[0]._id,{forget_pass : btoa(v.toString())}).then(async(b)=>{
+                                member_model.findByIdAndUpdate(a[0]._id,{forget_pass : btoa(v.toString())}).then(async(b)=>{
                                     let token_send = await require("../../token_manager/create_random_value")()
                                     require("../../bd/local_storage_token_to_reset_password").push(token_send[1])
                                     const message = "Mail envoyer avec suuces"
@@ -40,9 +39,9 @@ module.exports = (app,model_utilisateur) =>{
 
                                 })
                                 setTimeout(() => {
-                                    model_utilisateur.find({forget_pass : btoa(v.toString())}).then((c)=>{
+                                    member_model.find({forget_pass : btoa(v.toString())}).then((c)=>{
                                         if(c){
-                                            model_utilisateur.findByIdAndUpdate(c[0]._id,{forget_pass : 0}).then((d)=>{
+                                            member_model.findByIdAndUpdate(c[0]._id,{forget_pass : 0}).then((d)=>{
                                                 console.log(d)
                                                 return false
                                             })
@@ -60,4 +59,3 @@ module.exports = (app,model_utilisateur) =>{
         }
     })
 }
-
