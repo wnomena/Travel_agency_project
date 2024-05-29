@@ -1,5 +1,5 @@
-module.exports = (app,bcrypt,model) =>{
-    app.post("/login",(req,res) =>{
+module.exports = (app,model_member,bcrypt) =>{
+    app.post("/login_member",(req,res)=>{
         const all_client_information = [{name : "mail",value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe}]
         for(let i = 0; i < all_client_information.length; i++){
             if(all_client_information[i].value == "" || all_client_information[i].value == undefined){
@@ -8,20 +8,15 @@ module.exports = (app,bcrypt,model) =>{
             }
         }
         try {
-            model.find({mail : btoa(all_client_information[0].value)}).then((a)=>{
+            model_member.find({mail : btoa(all_client_information[0].value)}).then((a)=>{
                 if(a == "" || a == []){
                     const message = "Verifier votre adresse mail"
                     return res.status(400).json({message})
                 }else{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
-                            const token = await require("../token_manager/create_random_value")()
-                            for(let i = 0; i < require("../bd/local_storage_for_token").length + 1; i++){
-                                require("../bd/local_storage_for_token").pop()
-                            }
-                            require("../bd/local_storage_for_token").push(token)
                             const message = "Connexion reussi"
-                            return res.json({message,token : token})
+                            return res.json({message})
                         }else{
                             const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
                             return res.status(400).json({message})
@@ -35,4 +30,3 @@ module.exports = (app,bcrypt,model) =>{
         }
     })
 }
-//route fonctionnel
