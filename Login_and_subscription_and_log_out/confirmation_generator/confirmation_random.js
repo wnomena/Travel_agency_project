@@ -16,12 +16,12 @@ module.exports = (app,model_utilisateur) =>{
                         const smtpConfig = nodemailer.createTransport({
                                 service : "gmail",
                                 auth : {
-                                    user : "wnomena58@gmail.com",
-                                    pass : "Fifaliana2712@"
+                                    user : "gadeke3488@hutov.com",
+                                    pass : ""
                             }
                         });
                         const message = {
-                            from : "wnomena58@gmail.com",
+                            from : "gadeke3488@hutov.com",
                             to : req.params.mail,
                             subject : "Réinitialisation de mot de passe",
                             text : `Veuillez copier le code dans le page pour pouvoir réinitialiser votre mot de passe : ${Math.floor(v)}`
