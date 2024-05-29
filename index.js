@@ -38,6 +38,10 @@ const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
 //all_way
+//creation de nouveau member par un admin
+require("./member_manager/create_new_member")(app,member_model)
+//supression de member par un admin
+require("./member_manager/supression_de_member")(app,member_model,model_utilisateur)
 //susscription_member
 require("./Login_and_subscription_and_log_out/member_auth/subscription_member")(app,member_model,bcrypt)
 //lgin_member
@@ -51,6 +55,7 @@ require("./Login_and_subscription_and_log_out/login")(app,bcrypt,model_utilisate
 //send_mail_to_reset_password_member
 require("./Login_and_subscription_and_log_out/member_auth/member_send_mail")(app,member_model)
 //verification_of_sent_mail_to_member
+require("./Login_and_subscription_and_log_out/member_auth/member_verification_mail")(app,member_model)
 //update password
 require("./Login_and_subscription_and_log_out/update_password")(app,model_utilisateur,bcrypt)
 //add commentary by member
