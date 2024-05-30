@@ -1,6 +1,6 @@
 module.exports = (app,model_utilisateur) =>{
     const nodemailer = require("nodemailer")
-    app.post("/number_generator/:mail",(req,res)=>{
+    app.post("/send_mail/number_generator/:mail",(req,res)=>{
         try {
             if(!req.params.mail){
                 const message = "Veuillez ajouter l'adresse mail pour l'envoi du code"

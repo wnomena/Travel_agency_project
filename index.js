@@ -14,24 +14,56 @@ function expiration_token(){
         }
     }, 18000);
 }
+function restriction_if_login_thre_time(a,b){
+    let table = []
+    console.log(`return : ${a}`)
+    if(require("./bd/local_restrinction_for_connexion_link_users").length > 3){
+        if(JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 1]) == JSON.stringify({link : a,mail : b}) && JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 2]) == JSON.stringify({link : a,mail : b})){
+            const message = "Trop de tentative, veuillez réessayer plus tard"
+            while(table.length !== 0){
+                table.pop()
+            }
+            table.push({message,acces : false})
+        }else{
+            const message = "Acces autorisé"
+            while(table.length !== 0){
+                table.pop()
+            }
+            table.push({message,acces : true})
+        }
+    }else{
+        while(table.length !== 0){
+            table.pop()
+        }
+        const message = "Acces autorisé"
+        table.push({message,acces : true})
+    }
+    return table
+}
 require("./bd/connect_to_mongoose_bd")(mongoose)
 //all middelwares
 app.use(express.json())
 app.use(cors())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
-    console.log(req.url)
-    if(req.url == "/send_mail/member"){
-        console.log("token_créer")
-        expiration_token()
-    }
+    require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : req.body.mail})
     next()
 })
+app.use("/login/",(req,res,next)=>{
+    let resultat = restriction_if_login_thre_time("login",req.body.mail)
+    if(resultat[0].acces){
+        next()
+    }else{
+        const message = resultat[0].message
+        return res.status(400).json({message})
+    }
+})
 app.use(cookie_parser())
+//middleware pour gestion de token
 app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
+
 app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
-    console.log(atob(a))
     res.json(a)
 })
 const  model_utilisateur = require("./bd/schema/schema_users")

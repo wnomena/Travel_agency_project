@@ -8,15 +8,22 @@ module.exports = (app,model_utilisateur) =>{
             }
         }
         try {
-            model_utilisateur.find({$and : [{mail : value_of_requets[0].value},{forget_pass : value_of_requets[1].value}]}).then((a)=>{
+            model_utilisateur.find({$and : [{mail : value_of_requets[0].value},{forget_pass : value_of_requets[1].value}]}).then(async(a)=>{
                 if(a == "" || a == []){
                     const message = "Vérifier les informations que vous avez saisi"
-                    return res.status(400).json({message})
+                    res.status(400).json({message})
                 }
-                model_utilisateur.findByIdAndUpdate(a[0]._id,{forget_pass : ""}).then((b)=>{
-                    const message = "Accès autoriser pour la suite"
-                    return res.json({message})
-                })
+                setTimeout(() => {
+                    model_utilisateur.findByIdAndUpdate(a[0]._id,{forget_pass : ""}).then((b)=>{
+                        console.log(b)
+                        return false
+                    })
+                }, 1800000);
+                const token = await require("../../token_manager/create_random_value")()
+                while(require("../../bd/local_storage_token_to_reset_password").length !== 0){
+                    require("../../bd/local_storage_token_to_reset_password").pop()
+                }
+                require("../../bd/local_storage_token_to_reset_password").push(token)
             })
         } catch (error) {
             const message = "Le serveur ne répond pas"
