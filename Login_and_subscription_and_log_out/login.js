@@ -15,13 +15,24 @@ module.exports = (app,bcrypt,model) =>{
                 }else{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
-                            const token = await require("../token_manager/create_random_value")()
-                            for(let i = 0; i < require("../bd/local_storage_for_token").length + 1; i++){
-                                require("../bd/local_storage_for_token").pop()
+                            let message;
+                            if(a[0].mot_de_passe.length < 8){
+                                let token = await require("../token_manager/create_random_value")()
+                                while (require("../bd/local_storage_token_to_reset_password").length !== 0){
+                                    require("../bd/local_storage_token_to_reset_password").pop()
+                                }
+                                require("../bd/local_storage_token_to_reset_password").push(token)
+                                message = "Votre mot de passe est expiré, veuillez le changer"
+                                return res.json({message,token})
+                            }else{
+                                let token = await require("../token_manager/create_random_value")()
+                                for(let i = 0; i < require("../bd/local_storage_for_token").length + 1; i++){
+                                    require("../bd/local_storage_for_token").pop()
+                                }
+                                message = "Connexion reussi"
+                                require("../bd/local_storage_for_token").push(token)
+                                return res.json({message,token : token})
                             }
-                            require("../bd/local_storage_for_token").push(token)
-                            const message = "Connexion reussi"
-                            return res.json({message,token : token})
                         }else{
                             const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
                             return res.status(400).json({message})

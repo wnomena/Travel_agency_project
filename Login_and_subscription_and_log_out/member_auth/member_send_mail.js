@@ -33,9 +33,9 @@ module.exports = (app,member_model) =>{
                             }else {
                                 member_model.findByIdAndUpdate(a[0]._id,{forget_pass : btoa(v.toString())}).then(async(b)=>{
                                     let token_send = await require("../../token_manager/create_random_value")()
-                                    require("../../bd/local_storage_token_to_reset_password").push(token_send[1])
+                                    require("../../bd/local_storage_token_to_reset_password").push(token_send)
                                     const message = "Mail envoyer avec suuces"
-                                    res.json({message,token : token_send[0]})
+                                    res.json({message,token : token_send})
 
                                 })
                                 setTimeout(() => {
