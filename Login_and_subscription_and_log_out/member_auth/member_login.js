@@ -1,5 +1,5 @@
 module.exports = (app,model_member,bcrypt) =>{
-    app.post("/login_member",(req,res)=>{
+    app.post("/login/login_member",(req,res)=>{
         const all_client_information = [{name : "mail",value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe}]
         for(let i = 0; i < all_client_information.length; i++){
             if(all_client_information[i].value == "" || all_client_information[i].value == undefined){
