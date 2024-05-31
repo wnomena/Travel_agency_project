@@ -110,6 +110,8 @@ require("./Login_and_subscription_and_log_out/log_out")(app)
 require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_model)
 //get all commentary
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
+//mamafa all
+require("./ho_fafana_ref_vita")(app,commentary_model)
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")(require("./token_manager/token_local_manager"))
 app.listen(5000,()=>{console.log("http://localhost:5000")})
 
