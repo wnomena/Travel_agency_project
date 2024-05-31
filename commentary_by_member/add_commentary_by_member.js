@@ -13,13 +13,14 @@ module.exports = (app,model_utilisateur,commentary_model) =>{
             }
         }
         try {
-            model_utilisateur.find({mail : btoa(req.params.mail)}).then((a)=>{
+            model_utilisateur.find({mail : btoa(req.params.mail)}).then(async(a)=>{
                 if(a == "" || a == []){
                     const message = "Vous n'avez pas l'autorisation nécessaire pour acceder à cette ressource"
                     return res.status(400).json({message})
                 }
                 else{
                     commentary_model.create({
+                        id : await require("../bd/schema/function_aut_increment_ident_for_commentary_model")(commentary_model),
                         mail : btoa(req.params.mail),
                         created : btoa(all_value_in_requests[1].value),
                         string_commentary : btoa(all_value_in_requests[0].value)

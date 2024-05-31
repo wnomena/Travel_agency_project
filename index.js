@@ -7,6 +7,7 @@ const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 console.log("hello node")
 function expiration_token(){
+    console.log("token_compter_begin")
     setTimeout(() => {
         console.log("token_effacer")
         for(let i = 0; i < require("./bd/local_storage_token_to_reset_password").length;i++){
@@ -46,10 +47,15 @@ app.use(express.json())
 app.use(cors())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
-    require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : req.body.mail})
+    if(req.body.mail == undefined){
+        require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : ""})
+    }else{
+        require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : req.body.mail})
+    }
     next()
 })
 app.use("/login/",(req,res,next)=>{
+
     let resultat = restriction_if_login_thre_time("login",req.body.mail)
     if(resultat[0].acces){
         next()
@@ -100,6 +106,7 @@ require("./Login_and_subscription_and_log_out/confirmation_generator/confirmatio
 require("./Login_and_subscription_and_log_out/forget_password")(app,model_utilisateur,bcrypt)
 //deconnexion
 require("./Login_and_subscription_and_log_out/log_out")(app)
+require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")(expiration_token)
 app.listen(5000,()=>{console.log("http://localhost:5000")})
 
 //route_necessaire

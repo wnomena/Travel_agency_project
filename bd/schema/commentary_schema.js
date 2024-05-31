@@ -1,5 +1,9 @@
-const {mongoose,Schema, model} = require("mongoose")
+const {mongoose,Schema} = require("mongoose")
 const commentary_model = mongoose.model("commentary_af_all_memeber",new Schema({
+    id : {
+        type : Number,
+        require : true
+    },
     mail : {
         type : String,
         require : true
