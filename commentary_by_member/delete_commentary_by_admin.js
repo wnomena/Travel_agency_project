@@ -8,8 +8,8 @@ module.exports = (app,commentary_model) =>{
             }
         }
         try {
-            commentary_model.deleteOne({$and : [{mail : table[0].value},{id : table[1].value}]}).then((a)=>{
-                const message = "Commentaire effectué avec succès"
+            commentary_model.deleteOne({id : table[1].value}).then((a)=>{
+                const message = "Commentaire effacé avec succès"
                 return res.json({message})
             })
         } catch (error) {

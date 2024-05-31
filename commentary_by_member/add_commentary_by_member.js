@@ -5,7 +5,7 @@ module.exports = (app,model_utilisateur,commentary_model) =>{
             return res.status(400).json({message})
         }
         const date = new Date()
-        const all_value_in_requests = [{name : "commentary",value : req.body.commentary},{name : "creation_date", value : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}]
+        const all_value_in_requests = [{name : "commentary",value : req.body.string_commentary},{name : "creation_date", value : `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`}]
         for(let i of all_value_in_requests){
             if(i.value == undefined){
                 const message = "Champs requis"
