@@ -1,6 +1,6 @@
 const {mongoose,Schema} = require("mongoose")
 const commentary_model = mongoose.model("commentary_af_all_memeber",new Schema({
-    id : {
+    identifiant : {
         type : Number,
         require : true
     },

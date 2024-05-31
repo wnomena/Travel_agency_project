@@ -1,8 +1,15 @@
 module.exports = async(commentary_model) =>{
     let table = []
     await commentary_model.find({}).then((a)=>{
-        const c =  a.reduce((a,b)=> Math.max(a.id,b.id))
-        table.push(c + 1)
+        console.log(a)
+        if(a == "" || a == []){
+            table.push(1)
+        }else{
+            a.forEach(element => {
+                table.push(element.id)
+           });
+        }
     })
-    return table[0]
+    return Math.max(table) + 1
+
 }
