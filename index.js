@@ -1,4 +1,5 @@
 const express = require("express")
+const node_watch = require("node-watch")
 const bcrypt = require("bcrypt")
 const cors = require("cors")
 const body_parser = require("body-parser")
@@ -102,7 +103,7 @@ require("./commentary_by_member/add_commentary_by_member")(app,model_utilisateur
 require("./Login_and_subscription_and_log_out/confirmation_generator/confirmation_random")(app,model_utilisateur)
 //verification an le mail no envoyena
 require("./Login_and_subscription_and_log_out/confirmation_generator/confirmation_of_sent_code")(app,model_utilisateur)
-//mis è jours de mot de passe sans mettre l'ancien
+//forget_pass_uers
 require("./Login_and_subscription_and_log_out/forget_password")(app,model_utilisateur,bcrypt)
 //deconnexion
 require("./Login_and_subscription_and_log_out/log_out")(app)
@@ -112,7 +113,16 @@ require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_mode
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
 //mamafa all
 require("./ho_fafana_ref_vita")(app,commentary_model)
-require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")(require("./token_manager/token_local_manager"))
+//member_forget_pass
+require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
+//fonction automatique pour expiration de token
+// require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
+require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
+node_watch(require("./bd/local_storage_for_token"),()=>{{
+    console.log(require("./bd/local_storage_for_token"))
+    console.log("valeur changé")
+}})
+
 app.listen(5000,()=>{console.log("http://localhost:5000")})
 
 //route_necessaire

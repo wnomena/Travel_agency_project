@@ -32,23 +32,10 @@ module.exports = (app,model_utilisateur) =>{
                                 console.log(err)
                                 return res.status(500).json({message})
                             }else {
-                                model_utilisateur.findByIdAndUpdate(a[0]._id,{forget_pass : btoa(v.toString())}).then(async(b)=>{
-                                    let token_send = await require("../../token_manager/create_random_value")()
-                                    require("../../bd/local_storage_token_to_reset_password").push(token_send[1])
-                                    const message = "Mail envoyer avec suuces"
-                                    res.json({message,token : token_send[0]})
-
-                                })
-                                setTimeout(() => {
-                                    model_utilisateur.find({forget_pass : btoa(v.toString())}).then((c)=>{
-                                        if(c){
-                                            model_utilisateur.findByIdAndUpdate(c[0]._id,{forget_pass : 0}).then((d)=>{
-                                                console.log(d)
-                                                return false
-                                            })
-                                        }
-                                    })
-                                },1800);
+                                while (require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0){
+                                    require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").pop()
+                                }
+                                require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").push(v)
                             }
                         })
                     }
