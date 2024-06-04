@@ -8,16 +8,23 @@ module.exports = (app,model_utilisateur) =>{
             }
         }
         try {
-            model_utilisateur.find({$and : [{mail : value_of_requets[0].value},{forget_pass : value_of_requets[1].value}]}).then(async(a)=>{
+            model_utilisateur.find({mail : value_of_requets[0].value}).then((a)=>{
                 if(a == "" || a == []){
                     const message = "Vérifier les informations que vous avez saisi"
                     return res.status(400).json({message})
                 }
-                const token = await require("../../token_manager/create_random_value")()
-                while(require("../../bd/local_storage_token_to_reset_password").length !== 0){
-                    require("../../bd/local_storage_token_to_reset_password").pop()
-                }
-                require("../../bd/local_storage_token_to_reset_password").push(token)
+                require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").forEach((element)=>{
+                    if (element == value_of_requets[1].value) {
+                        while (require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0) {
+                            require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").pop()
+                        }
+                        const message = "Accès autorisé"
+                        return res.json({message})
+                    } else {
+                        const message = "Autorisation revoquée"
+                        return res.status(401).json({message})
+                    }
+                })
             })
         } catch (error) {
             const message = "Le serveur ne répond pas"
