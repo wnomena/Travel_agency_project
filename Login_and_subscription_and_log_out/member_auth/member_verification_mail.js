@@ -15,6 +15,9 @@ module.exports = (app,model_member) =>{
                 }
                 require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").forEach((element)=>{
                     if(JSON.stringify(element) == value_of_requets[1].value ){
+                        while (require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0){
+                            require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").pop()
+                        }
                         const message = "Accès autorisé"
                         return res.json({message})
                     }else if(element.forget_pass == require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass")[require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length - 1] && element !== value_of_requets[1].value){

@@ -7,15 +7,7 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 console.log("hello node")
-function expiration_token(){
-    console.log("token_compter_begin")
-    setTimeout(() => {
-        console.log("token_effacer")
-        for(let i = 0; i < require("./bd/local_storage_token_to_reset_password").length;i++){
-            require("./bd/local_storage_token_to_reset_password").pop()
-        }
-    }, 18000);
-}
+
 function restriction_if_login_thre_time(a,b){
     let table = []
     console.log(`return : ${a}`)
