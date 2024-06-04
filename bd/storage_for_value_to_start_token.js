@@ -1,2 +1,4 @@
-let value_to_start_token_height = [0]
+let value_to_start_token_height = []
 module.exports = value_to_start_token_height
+
+

@@ -10,7 +10,7 @@ module.exports = async(commentary_model) =>{
            });
         }
     })
-    
+     
     return table.reduce((a,b) => Math.max(a,b)) + 1
 
 }

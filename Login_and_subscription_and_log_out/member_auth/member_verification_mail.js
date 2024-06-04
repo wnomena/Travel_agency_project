@@ -13,9 +13,14 @@ module.exports = (app,model_member) =>{
                     const message = "Vérifier les informations que vous avez saisi"
                     return res.status(400).json({message})
                 }
-                model_member.findByIdAndUpdate(a[0]._id,{forget_pass : ""}).then((b)=>{
-                    const message = "Accès autoriser pour la suite"
-                    return res.json({message})
+                require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").forEach((element)=>{
+                    if(JSON.stringify(element) == value_of_requets[1].value ){
+                        const message = "Accès autorisé"
+                        return res.json({message})
+                    }else if(element.forget_pass == require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass")[require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length - 1] && element !== value_of_requets[1].value){
+                        const message = "Accès revoqué"
+                        return res.status(401).json({message})
+                    }
                 })
             })
         } catch (error) {
