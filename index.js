@@ -68,7 +68,10 @@ app.get("/",(req,res)=>{
 const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
+const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 //all_way
+//ajout de nouveelle circuit parent
+require("./circuit_manager_only_by_admin/add_circuit_by_users")(app,parent_road_model)
 //creation de nouveau member par un admin
 require("./member_manager/create_new_member")(app,member_model)
 //supression de member par un admin
@@ -108,7 +111,7 @@ require("./ho_fafana_ref_vita")(app,commentary_model)
 //member_forget_pass
 require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
 //fonction automatique pour expiration de token
-// require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
+require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
 node_watch(require("./bd/local_storage_for_token"),()=>{{
     console.log(require("./bd/local_storage_for_token"))

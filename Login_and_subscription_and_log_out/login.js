@@ -29,10 +29,6 @@ module.exports = (app,bcrypt,model) =>{
                                 for(let i = 0; i < require("../bd/local_storage_for_token").length + 1; i++){
                                     require("../bd/local_storage_for_token").pop()
                                 }
-                                while(require("../bd/storage_for_value_to_start_token").length !== 0){
-                                    require("../bd/storage_for_value_to_start_token").pop()
-                                }
-                                require("../bd/storage_for_value_to_start_token").push(1)
                                 message = "Connexion reussi"
                                 require("../bd/local_storage_for_token").push(token)
                                 return res.json({message,token : token})
