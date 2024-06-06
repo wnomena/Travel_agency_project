@@ -9,10 +9,6 @@ const parent_road_model = mongoose.model("parent_road",new Schema({
         type : String,
         require : true
     },
-    choice_length : {
-        type : Number,
-        require : true
-    },
     about_all_road : {
         type : String,
         require : true
