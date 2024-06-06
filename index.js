@@ -40,6 +40,7 @@ app.use(express.json())
 app.use(cors())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
+    console.log(req.url)
     if(req.body.mail == undefined){
         require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : ""})
     }else{
@@ -59,7 +60,7 @@ app.use("/login/",(req,res,next)=>{
 })
 app.use(cookie_parser())
 //middleware pour gestion de token
-app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
+// app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
 
 app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
@@ -69,9 +70,12 @@ const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
+const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 //all_way
 //ajout de nouveelle circuit parent
 require("./circuit_manager_only_by_admin/add_circuit_by_users")(app,parent_road_model)
+//ajout de nouveau circuit enfant
+require("./circuit_manager_only_by_admin/add_under_circuit_by_users")(app,child_road_model,parent_road_model)
 //creation de nouveau member par un admin
 require("./member_manager/create_new_member")(app,member_model)
 //supression de member par un admin
@@ -107,7 +111,7 @@ require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_mode
 //get all commentary
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
 //mamafa all
-require("./ho_fafana_ref_vita")(app,commentary_model)
+require("./ho_fafana_ref_vita")(app,parent_road_model)
 //member_forget_pass
 require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
 //fonction automatique pour expiration de token
@@ -119,6 +123,5 @@ node_watch(require("./bd/local_storage_for_token"),()=>{{
 }})
 
 app.listen(5000,()=>{console.log("http://localhost:5000")})
-
 //route_necessaire
 //connexion

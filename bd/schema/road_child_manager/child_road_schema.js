@@ -1,7 +1,11 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose ,Schema} = require("mongoose");
 
 const child_road_model = mongoose.model("child_road",new Schema({
     parent_ident_equal_to_child : {
+        type : String,
+        require : true
+    },
+    name : {
         type : String,
         require : true
     },
@@ -10,7 +14,7 @@ const child_road_model = mongoose.model("child_road",new Schema({
         require : true
     },
     distance : {
-        type : Number,
+        type : String,
         require : true
     },
     presentation_image : [{
@@ -26,5 +30,15 @@ const child_road_model = mongoose.model("child_road",new Schema({
             type : String,
             require : true
         }
-    }]
+    }],
+    sejour_delay : {
+        type : String,
+        require : require
+    }
+    ,
+    like_by_members : [{mail : {
+        type : String,
+        require : true
+    }}]
 }))
+module.exports = child_road_model
