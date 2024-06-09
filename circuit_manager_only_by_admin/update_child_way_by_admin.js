@@ -9,7 +9,7 @@ module.exports = (app,parent_road_model) =>{
             return res.status(400).json({message})
         }
         try {
-            parent_road_model.find({identifiant : req.params.id}).then(async(a)=>{
+            parent_road_model.find({parent_ident_equal_to_child : req.params.id}).then(async(a)=>{
                 if(presentation_image !== undefined || presentation_image !== ""){
                     presentation_image = await require("../convert_image_to_string")(req.body.presentation_image)
                 }
