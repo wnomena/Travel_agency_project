@@ -3,7 +3,16 @@ module.exports = (app,parent_road_model) =>{
         try {
             parent_road_model.find({}).then((a)=>{
                 const message = "Les résultats de votre recherches"
-                return res.json({message,data : a})
+                let decrypted_value = []
+                for(let i = 0; i < a.length; i++){
+                    decrypted_value.push({
+                        identifiant : a[i].identifiant,
+                        name : atob(a[i].name),
+                        about_all_road : atob(a[i].about_all_road),
+                        presentation_image : a[i].presentation_image
+                    })
+                }
+                return res.json({message,data : decrypted_value})
             })
         } catch (error) {
             const message = "Le serveur ne répon pas, veuillez réessayer  ultérieurement"
@@ -11,3 +20,4 @@ module.exports = (app,parent_road_model) =>{
         }
     })
 }
+//fonctionnel

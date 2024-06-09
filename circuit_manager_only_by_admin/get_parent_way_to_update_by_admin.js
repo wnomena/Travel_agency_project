@@ -14,7 +14,16 @@ module.exports = (app,child_road_model) =>{
                     return res.json({message,data : a})
                 }else{
                     const message = "Les résultats de votre recherche"
-                    return res.json({message,data : a})
+                    let decrypted_value = []
+                for(let i = 0; i < a.length; i++){
+                    decrypted_value.push({
+                        identifiant : a[i].identifiant,
+                        name : atob(a[i].name),
+                        about_all_road : atob(a[i].about_all_road),
+                        presentation_image : a[i].presentation_image
+                    })
+                }
+                    return res.json({message,data : decrypted_value})
                 }
             })
         } catch (error) {

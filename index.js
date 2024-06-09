@@ -84,7 +84,7 @@ require("./circuit_manager_only_by_admin/update_parent_circuit_by_id")(app,paren
 //update child road infromation by admin
 require("./circuit_manager_only_by_admin/update_child_way_by_admin")(app,child_road_model)
 //delete one parent
-require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,model_utilisateurs,parent_road_model,child_road_model)
+require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,model_utilisateur,parent_road_model,child_road_model)
 //delete all child road of the same ident
 require("./circuit_manager_only_by_admin/delete_all_child_of_one_parent")(app,child_road_model)
 //delete one child road bhy name 
