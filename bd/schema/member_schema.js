@@ -11,10 +11,6 @@ const member_schema = mongoose.model("member_bd",new Schema({
     nom_complet : {
         type : String,
         require : true
-    },
-    forget_pass: {
-        type : Number,
-        require : true
     }
 }))
 module.exports = member_schema

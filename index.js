@@ -1,5 +1,4 @@
 const express = require("express")
-const node_watch = require("node-watch")
 const bcrypt = require("bcrypt")
 const cors = require("cors")
 const body_parser = require("body-parser")
@@ -72,6 +71,24 @@ const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 //all_way
+//get all prent road to show client 
+require("./circuit_manager_only_by_admin/get_all_parent_road_by_public_or_by_admin")(app,parent_road_model)
+//get all child road to show client
+require("./circuit_manager_only_by_admin/get_all_under_road_by_parent_id")(app,child_road_model)
+//get parent road information to update by admin
+require("./circuit_manager_only_by_admin/get_parent_way_to_update_by_admin")(app,parent_road_model)
+//get child road to show client or to update by admin
+require("./circuit_manager_only_by_admin/get_one_road_by_public_or_by_admin")(app,child_road_model)
+//update parent road information by admin
+require("./circuit_manager_only_by_admin/update_parent_circuit_by_id")(app,parent_road_model)
+//update child road infromation by admin
+require("./circuit_manager_only_by_admin/update_child_way_by_admin")(app,child_road_model)
+//delete one parent
+require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,model_utilisateurs,parent_road_model,child_road_model)
+//delete all child road of the same ident
+require("./circuit_manager_only_by_admin/delete_all_child_of_one_parent")(app,child_road_model)
+//delete one child road bhy name 
+require("./circuit_manager_only_by_admin/delete_under_circuit_by_users")(app,child_road_model)
 //ajout de nouveelle circuit parent
 require("./circuit_manager_only_by_admin/add_circuit_by_users")(app,parent_road_model)
 //ajout de nouveau circuit enfant
@@ -111,16 +128,12 @@ require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_mode
 //get all commentary
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
 //mamafa all
-require("./ho_fafana_ref_vita")(app,parent_road_model)
+require("./ho_fafana_ref_vita")(app)
 //member_forget_pass
 require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
 //fonction automatique pour expiration de token
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
-node_watch(require("./bd/local_storage_for_token"),()=>{{
-    console.log(require("./bd/local_storage_for_token"))
-    console.log("valeur changé")
-}})
 
 app.listen(5000,()=>{console.log("http://localhost:5000")})
 //route_necessaire
