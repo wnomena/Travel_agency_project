@@ -13,31 +13,18 @@ module.exports = (app,model_utilisateur) =>{
                         return res.status(401).json({message})
                     }else{
                         const v = Math.floor(Math.random()* (999999 - 100000))  + 100000
-                        const smtpConfig = nodemailer.createTransport({
-                                service : "gmail",
-                                auth : {
-                                    user : "gadeke3488@hutov.com",
-                                    pass : ""
-                            }
+                        let transporter = nodemailer.createTransport({
+                            sendmail : true,
+                            newline : "windows",
+                            logger : false
                         });
-                        const message = {
-                            from : "gadeke3488@hutov.com",
+                        let message = {
+                            from : "Developpeur Web <jsdev.web2@gmail.com>",
                             to : req.params.mail,
-                            subject : "Réinitialisation de mot de passe",
-                            text : `Veuillez copier le code dans le page pour pouvoir réinitialiser votre mot de passe : ${Math.floor(v)}`
-                        };
-                        smtpConfig.sendMail(message,(err,info)=>{
-                            if(err){
-                                const message = "Il y a une erreur lors de l'envoi du mail : " + err 
-                                console.log(err)
-                                return res.status(500).json({message})
-                            }else {
-                                while (require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0){
-                                    require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").pop()
-                                }
-                                require("../../bd/storage_to_begin_set_time_out_for_delete_forget_pass").push(v)
-                            }
-                        })
+                            Subject : "Réinitialisation de mot de passe",
+                            text : v,
+                        }
+                        transporter.sendMail(message)
                     }
                 })
             }

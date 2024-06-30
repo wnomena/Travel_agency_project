@@ -1,3 +1,5 @@
+
+
 module.exports = (mongoose) =>{
     (async()=>{
         try {
@@ -8,3 +10,12 @@ module.exports = (mongoose) =>{
         }
     })()
 }
+// new Promise((resolve)=>{
+//     resolve(mongoose.connect("mongodb://localhost:27017/agence_de_voyage"))
+// }).then((a)=>{
+//     if(a){
+//         console.log("c est bon")
+//     }
+// }).catch(error=>{
+//     console.log("fdrgdxfg")
+// })

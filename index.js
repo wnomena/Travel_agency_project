@@ -71,6 +71,8 @@ const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 //all_way
+//put reaction
+require("./circuit_manager_only_by_admin/make_one_way_a _favorite_of_client")(app,child_road_model)
 //get all prent road to show client 
 require("./circuit_manager_only_by_admin/get_all_parent_road_by_public_or_by_admin")(app,parent_road_model)
 //get all child road to show client
@@ -84,7 +86,7 @@ require("./circuit_manager_only_by_admin/update_parent_circuit_by_id")(app,paren
 //update child road infromation by admin
 require("./circuit_manager_only_by_admin/update_child_way_by_admin")(app,child_road_model)
 //delete one parent
-require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,model_utilisateurs,parent_road_model,child_road_model)
+require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,model_utilisateur,parent_road_model,child_road_model)
 //delete all child road of the same ident
 require("./circuit_manager_only_by_admin/delete_all_child_of_one_parent")(app,child_road_model)
 //delete one child road bhy name 
