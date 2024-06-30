@@ -2,7 +2,7 @@ module.exports = (req,res,next) =>{
     let scrypt = require("bcrypt")
     const authorization = req.headers.authorization
     if(req.headers.authorization == undefined || req.headers.authorization == ""){
-        const message = "Vous n'avez pas les authorisations nécessaires pour ceeder à cette ressources 1"
+        const message = "Vous n'avez pas les authorisations nécessaires pour acceder à cette ressources 1"
         return res.status(400).json({message})
     }else{
         if(authorization.split(" ")[0] !== "nomena_walker"){

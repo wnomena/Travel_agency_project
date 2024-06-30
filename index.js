@@ -71,6 +71,8 @@ const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 //all_way
+//put reaction
+require("./circuit_manager_only_by_admin/make_one_way_a _favorite_of_client")(app,child_road_model)
 //get all prent road to show client 
 require("./circuit_manager_only_by_admin/get_all_parent_road_by_public_or_by_admin")(app,parent_road_model)
 //get all child road to show client
