@@ -17,20 +17,10 @@ const child_road_model = mongoose.model("child_road",new Schema({
         type : String,
         require : true
     },
-    presentation_image : [{
-        image : {
+    presentation_image : {
             type : String,
             require : true
         },
-        file_name : {
-            type: String,
-            require : true
-        },
-        extention_file_name : {
-            type : String,
-            require : true
-        }
-    }],
     sejour_delay : {
         type : String,
         require : require

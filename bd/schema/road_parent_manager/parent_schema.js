@@ -13,19 +13,22 @@ const parent_road_model = mongoose.model("parent_road",new Schema({
         type : String,
         require : true
     },
-    presentation_image : [{
-        image : {
+    presentation_image : {
             type : String,
             require : true
         },
-        file_name : {
-            type: String,
-            require : true
-        },
-        extention_file_name : {
-            type : String,
-            require : true
-        }
-    }]
+
+    price : {
+        type : String,
+        require : true
+    },
+    difficulty : {
+        type : String,
+        require : true
+    },
+    period : {
+        type : String,
+        require : true
+    }
 }))
 module.exports = parent_road_model

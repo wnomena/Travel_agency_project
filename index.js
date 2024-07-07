@@ -1,12 +1,22 @@
 const express = require("express")
+const { Server } = require("socket.io")
 const bcrypt = require("bcrypt")
 const cors = require("cors")
 const body_parser = require("body-parser")
 const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
-console.log("hello node")
+const { createServer } = require("node:http")
+const socket = createServer(app)
+const io = new Server(socket,{cors : "http://localhost:4200"})
+console.log("hello node")   
 
+//route de socket
+
+io.on("socket.io",()=>{
+    console.log("cool")
+})
+//end route de socket
 function restriction_if_login_thre_time(a,b){
     let table = []
     console.log(`return : ${a}`)
@@ -137,6 +147,5 @@ require("./Login_and_subscription_and_log_out/member_auth/member_forget_password
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
 
-app.listen(5000,()=>{console.log("http://localhost:5000")})
-//route_necessaire
-//connexion
+app.listen(5000)
+
