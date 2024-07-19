@@ -19,7 +19,10 @@ module.exports = (app,child_road_model) =>{
                         distance: atob(a[0].distance),
                         presentation_image : a[0].presentation_image,
                         sejour_delay: atob(a[0].sejour_delay),
-                        like_by_members: a[0].like_by_members
+                        like_by_members: a[0].like_by_members,
+                        price : atob(a[0].price),
+                        confort : atob(a[0].confort),
+                        difficulty : atob(a[0].difficulty)
                     }})
                 }else{
                     const message = "Les résultats de votre recherche"
@@ -32,9 +35,13 @@ module.exports = (app,child_road_model) =>{
                             distance: atob(a[i].distance),
                             presentation_image: a[i].presentation_image, 
                             sejour_delay: atob(a[i].sejour_delay),
-                            like_by_members: a[i].like_by_members
+                            like_by_members: a[i].like_by_members,
+                            price : atob(a[0].price),
+                            confort : atob(a[0].confort),
+                            difficulty : atob(a[0].difficulty)
                         })
                     }
+                    console.log(decryptage_value)
                     return res.json({message,data : decryptage_value})
                 }
             })

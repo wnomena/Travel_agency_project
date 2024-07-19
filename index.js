@@ -6,7 +6,12 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 console.log("hello node")
+// multer configuration
 
+
+  // Initialize upload middleware and add file size limit
+  
+//end of multer configuration
 function restriction_if_login_thre_time(a,b){
     let table = []
     console.log(`return : ${a}`)
@@ -71,6 +76,9 @@ const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 //all_way
+//req image
+require("./circuit_manager_only_by_admin/get_image")(app)
+require("./circuit_manager_only_by_admin/test_for_multer")(app)
 //put reaction
 require("./circuit_manager_only_by_admin/make_one_way_a _favorite_of_client")(app,child_road_model)
 //get all prent road to show client 

@@ -9,7 +9,9 @@ module.exports = (app,parent_road_model) =>{
                         identifiant : a[i].identifiant,
                         name : atob(a[i].name),
                         about_all_road : atob(a[i].about_all_road),
-                        presentation_image : a[i].presentation_image
+                        presentation_image : a[i].presentation_image,
+                        price : atob(a[i].price),
+                        period : atob(a[i].period)
                     })
                 }
                 return res.json({message,data : decrypted_value})
