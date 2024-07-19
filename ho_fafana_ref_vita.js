@@ -6,7 +6,7 @@ module.exports = (app) =>{
     const array_model = [commentary_model,child_road_model,parent_road_model,member_model]
     app.delete("/utilisateurs/fafana/:code_to_delete/:mail_users",(req,res)=>{
         try {
-            if(req.params.code_to_delete == 3){
+            if(req.params.code_to_delete == 5){
                 if(req.params.mail_users == undefined || req.params.mail_users == ""){
                     return res.status(400).json({message : "Vérifier les informations que vous avez saisi"})
                 }

@@ -3,17 +3,29 @@ const { default: mongoose, Schema } = require("mongoose");
 const parent_road_model = mongoose.model("parent_road",new Schema({
     identifiant : {
         type : String,
-        require : true
+        required : true
     },
     name : {
         type : String,
-        require : true
+        required : true
     },
     about_all_road : {
         type : String,
-        require : true
+        required : true
     },
     presentation_image : {
+ je_ne_sais_plus_la_modification_faite
+        type : String,
+        required : true
+        },
+    price : {
+        type : String,
+        required : true
+    },
+    period : {
+        type : String,
+        required : true
+=======
             type : String,
             require : true
         },
@@ -29,6 +41,7 @@ const parent_road_model = mongoose.model("parent_road",new Schema({
     period : {
         type : String,
         require : true
+travel-agency
     }
 }))
 module.exports = parent_road_model

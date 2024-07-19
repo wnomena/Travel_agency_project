@@ -3,32 +3,48 @@ const { default: mongoose ,Schema} = require("mongoose");
 const child_road_model = mongoose.model("child_road",new Schema({
     parent_ident_equal_to_child : {
         type : String,
-        require : true
+        required : true
     },
     name : {
         type : String,
-        require : true
+        required : true
     },
     description : {
         type : String,
-        require : true
+        required : true
     },
     distance : {
         type : String,
-        require : true
+        required : true
     },
+//  je_ne_sais_plus_la_modification_faite
+    presentation_image :  {
+=======
     presentation_image : {
+ travel-agency
             type : String,
-            require : true
+            required : true
         },
     sejour_delay : {
         type : String,
-        require : require
+        required : true
     }
     ,
     like_by_members : [{mail : {
         type : String,
-        require : true
-    }}]
+        required : true
+    }}],
+    price : {
+        type : String,
+        required : true
+    },
+    difficulty : {
+        type : String,
+        required : true
+    },
+    confort : {
+        type : String,
+        required : true
+    }
 }))
 module.exports = child_road_model

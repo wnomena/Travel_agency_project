@@ -1,21 +1,22 @@
+const multer = require("../multer_middleware")
 module.exports = (app,parent_road_model) =>{
-    app.put("/utilisateurs/update_parent_road/by_user/:id",(req,res)=>{
-        let name = req.body.name
-         let about_all_road = req.body.about_all_road
-        let presentation_image = req.body.presentation_image
-        const arr = [{name : "name",value : req.body.name},{name : "description",value : req.about_all_road},{name : "presentation_image",value : req.body.presentation_image}]
+    app.put("/utilisateurs/update_parent_road/by_user/:id",multer,(req,res)=>{
+        const body = JSON.parse(req.body.body)
+         const arr = [{name : "name",value : body.name},{name : "description",value : body.about_all_road},{name : "presentation_image",value : req.file.filename},{name : "price",value : body.price}]
         if(req.params.id == undefined || req.params.id == ""){
             const message = "Champs requis"
             return res.status(400).json({message})
         }
+        let name = btoa(arr[0].value);
+        let about_all_road = btoa(arr[1].value);
+        let presentation_image = btoa(arr[2].value);
+        let price = btoa(arr[3].value);
         try {
             parent_road_model.find({identifiant : req.params.id}).then(async(a)=>{
-                if(presentation_image !== undefined || presentation_image !== ""){
-                    presentation_image = await require("../convert_image_to_string")(req.body.presentation_image)
-                }
-                const arr = [name,about_all_road,presentation_image]
-                for(let x = 0; x < arr.length; i++){
-                    if(arr[x] == undefined || arr[x] == ""){
+                for(let x = 0; x < arr.length; x++){
+                    console.log(arr[x].value)
+                    if(arr[x].value == undefined || arr[x].value == ""){
+                        console.log(arr[x].value)
                         switch (x) {
                             case 0:
                                 name = a[0].name
@@ -23,13 +24,18 @@ module.exports = (app,parent_road_model) =>{
                             case 1:
                                 about_all_road = a[0].about_all_road
                                 break;
-                            default:
+                            case 2:
                                 presentation_image = a[0].presentation_image
                                 break;
+                            default : 
+                                price = a[0].price
                         }
                     }
+                     else if(x == 2 && arr[x].value) {
+                        presentation_image = `http://localhost:5000/get/${arr[x].value}`
+                     }
                 }
-                parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, about_all_road : about_all_road, presentation_image : presentation_image}).then((a)=>{
+                parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, about_all_road : about_all_road, presentation_image : presentation_image,price : price}).then((a)=>{
                     const message = "Modification effectué avec succès"
                     return res.json({message})
                 })

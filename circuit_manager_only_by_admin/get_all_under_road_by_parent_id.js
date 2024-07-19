@@ -16,10 +16,12 @@ module.exports = (app,child_road_model) =>{
                         distance: atob(a[i].distance),
                         presentation_image: a[i].presentation_image, 
                         sejour_delay: atob(a[i].sejour_delay),
-                        like_by_members: a[i].like_by_members
+                        like_by_members: a[i].like_by_members,
+                        price : atob(a[i].price),
+                        difficulty : atob(a[i].difficulty)
                     })
                 }
-                return res.json({message,data : a})
+                return res.json({message,data : decrypted_value})
             })
         } catch (error) {
             const message = "Le serveur ne répond pas, veuillez réessayer  ultérieurement"
