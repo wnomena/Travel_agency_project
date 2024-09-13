@@ -22,6 +22,7 @@
     "node-watch": "^0.7.4",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
-    "python-shell": "^5.0.0"
+    "python-shell": "^5.0.0",
+    "socket.io": "^4.7.5"
   }
 }

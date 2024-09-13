@@ -5,8 +5,10 @@ module.exports = async(a) =>{
     console.log(a)
    try {
             let b = await fs.readFile(a,{encoding : "utf8"})
-        return [{image : Buffer.from(b).toString("base64"),file_name : path.basename(a).split(".")[0],extention_file_name : path.extname(a)}]
+            console.log(b)
+        return [{image : Buffer.from(b),file_name : path.basename(a).split(".")[0],extention_file_name : path.extname(a)}]
    } catch (error) {
-    console.log("conversiion en echec : " + error)
+    console.log("Echec de l'iportation !")
    }
+   return false
 }

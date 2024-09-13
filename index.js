@@ -1,10 +1,12 @@
 const express = require("express")
+const { Server } = require("socket.io")
 const bcrypt = require("bcrypt")
 const cors = require("cors")
 const body_parser = require("body-parser")
 const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
+je_ne_sais_plus_la_modification_faite
 console.log("hello node")
 // multer configuration
 
@@ -12,6 +14,19 @@ console.log("hello node")
   // Initialize upload middleware and add file size limit
   
 //end of multer configuration
+=======
+const { createServer } = require("node:http")
+const socket = createServer(app)
+const io = new Server(socket,{cors : "http://localhost:4200"})
+console.log("hello node")   
+
+//route de socket
+
+io.on("socket.io",()=>{
+    console.log("cool")
+})
+//end route de socket
+travel-agency
 function restriction_if_login_thre_time(a,b){
     let table = []
     console.log(`return : ${a}`)
@@ -143,6 +158,12 @@ require("./Login_and_subscription_and_log_out/member_auth/member_forget_password
 //fonction automatique pour expiration de token
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
+<<<<<<< HEAD
 app.listen(5000,() => console.log("http://localhost:5000"))
 //route_necessaire
 //connexion
+=======
+
+app.listen(5000)
+
+>>>>>>> 2692dc573286cbdccd18ec2d363b85d8b2c7c755
