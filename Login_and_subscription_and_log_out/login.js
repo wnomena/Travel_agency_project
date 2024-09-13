@@ -31,6 +31,7 @@ module.exports = (app,bcrypt,model) =>{
                                 }
                                 message = "Connexion reussi"
                                 require("../bd/local_storage_for_token").push(token)
+                                console.log(token)
                                 return res.json({message,token : token})
                             }
                         }else{

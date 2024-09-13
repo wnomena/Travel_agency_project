@@ -45,11 +45,6 @@ app.use(cors())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
     console.log(req.url)
-    if(req.body.mail == undefined){
-        require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : ""})
-    }else{
-        require("./bd/local_restrinction_for_connexion_link_users").push({link : req.url.split("/")[1],mail : req.body.mail})
-    }
     next()
 })
 app.use("/login/",(req,res,next)=>{
@@ -79,6 +74,10 @@ const child_road_model = require("./bd/schema/road_child_manager/child_road_sche
 //req image
 require("./circuit_manager_only_by_admin/get_image")(app)
 require("./circuit_manager_only_by_admin/test_for_multer")(app)
+//get favorite road 
+require("./circuit_manager_only_by_admin/get_favorite_road")(app,child_road_model)
+//update member pass
+require("./Login_and_subscription_and_log_out/member_auth/update_member_password")(app,member_model,bcrypt)
 //put reaction
 require("./circuit_manager_only_by_admin/make_one_way_a _favorite_of_client")(app,child_road_model)
 //get all prent road to show client 
@@ -144,7 +143,6 @@ require("./Login_and_subscription_and_log_out/member_auth/member_forget_password
 //fonction automatique pour expiration de token
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
-
-app.listen(5000,()=>{console.log("http://localhost:5000")})
+app.listen(5000,() => console.log("http://localhost:5000"))
 //route_necessaire
 //connexion

@@ -4,7 +4,7 @@ module.exports = (app,member_model,bcrypt) =>{
             for(let i = 0; i < element_array.length; i++){
                 console.log("mande le boucle")
                 if(element_array[i].value == "" || element_array[i].value == undefined){
-                    const message = "Champs requis"
+                    const message = "Required fields"
                     return res.status(400).json({message})
                 }
             }
@@ -12,7 +12,7 @@ module.exports = (app,member_model,bcrypt) =>{
                 member_model.find({}).then((a)=>{
                     for(let i = 0; i < a.length; i++){
                         if(a[i].mail == btoa(req.body.mail)){
-                            const re = "Veuillez choisir un autre adresse mail"
+                            const re = "Use an other mail"
                             res.status(400).json({re})
                             return false
                         }
@@ -23,7 +23,7 @@ module.exports = (app,member_model,bcrypt) =>{
                             nom_complet : btoa(req.body.nom_complet),
                             mot_de_passe : b
                         }).then((c)=>{
-                            const re = "Souscription effectuer avec succès"
+                            const re = "Subscription done"
                             res.json({re})
                             return false
                         })

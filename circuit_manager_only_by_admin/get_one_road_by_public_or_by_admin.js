@@ -22,7 +22,8 @@ module.exports = (app,child_road_model) =>{
                         like_by_members: a[0].like_by_members,
                         price : atob(a[0].price),
                         confort : atob(a[0].confort),
-                        difficulty : atob(a[0].difficulty)
+                        difficulty : atob(a[0].difficulty),
+                        period : atob(a[0].period)
                     }})
                 }else{
                     const message = "Les résultats de votre recherche"
@@ -36,9 +37,10 @@ module.exports = (app,child_road_model) =>{
                             presentation_image: a[i].presentation_image, 
                             sejour_delay: atob(a[i].sejour_delay),
                             like_by_members: a[i].like_by_members,
-                            price : atob(a[0].price),
-                            confort : atob(a[0].confort),
-                            difficulty : atob(a[0].difficulty)
+                            price : atob(a[i].price),
+                            confort : atob(a[i].confort),
+                            difficulty : atob(a[i].difficulty),
+                            period : atob(a[i].period)
                         })
                     }
                     console.log(decryptage_value)

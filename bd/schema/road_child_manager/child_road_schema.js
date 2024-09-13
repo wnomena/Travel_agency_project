@@ -41,6 +41,10 @@ const child_road_model = mongoose.model("child_road",new Schema({
     confort : {
         type : String,
         required : true
+    },
+    period : {
+        type : String,
+        required : true
     }
 }))
 module.exports = child_road_model

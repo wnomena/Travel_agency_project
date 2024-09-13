@@ -3,7 +3,16 @@ module.exports = (app,commentary_model) =>{
         try {
             commentary_model.find({}).then((a)=>{
                 const message = "Tout les liste de commentaires"
-                return res.json({message,liste : a})
+                let decrypted_value = []
+                for(let i of a) {
+                    decrypted_value.push({
+                        identifiant : i.identifiant,
+                        mail : atob(i.mail),
+                        created : atob(i.created),
+                        string_commentary : atob(i.string_commentary)
+                    })
+                }
+                return res.json({message,liste : decrypted_value})
             })
         } catch (error) {
             const message = "Le serveur ne répond pas, veuillez réessayer plsu tard"

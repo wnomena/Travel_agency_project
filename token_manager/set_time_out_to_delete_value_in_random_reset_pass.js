@@ -1,17 +1,18 @@
 const boucle_infinie = () =>{
     let intervalleID = setInterval(() => {
+        // console.log("vide reset")
         if(require("../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0){
             clearInterval(intervalleID)
-            console.log("xnxx")
+            // console.log("ca commence")
             let x = setTimeout(() => {
                 while (require("../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length !== 0) {
                 require("../bd/storage_to_begin_set_time_out_for_delete_forget_pass").pop()
                 }
                 clearInterval(y)
                 boucle_infinie()
+                // console.log("ce st fini")
             }, 1800000);
             let y = setInterval(() => {
-                console.log("commencement")
                 if(require("../bd/storage_to_begin_set_time_out_for_delete_forget_pass").length == 0){
                     clearTimeout(x)
                     clearInterval(y)
