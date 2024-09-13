@@ -3,8 +3,9 @@ module.exports = (app,child_road_model,parent_road_model) =>{
     app.post("/utilisateurs/add_unders/circuit/by_users",multer,(req,res)=>{
         let body = JSON.parse(req.body.body)
         console.log(body)
-        const array_list = [{name : "parent_ident_equal_to_child",value : body.parent_ident_equal_to_child},{name : "name",value : body.name},{name : "description",value : body.description},{name : "distance",value : body.distance},{name : "presentation_image",value : req.file.filename},{name : "sejour_delay",value : body.sejour_delay},{name : "price", value : body.price},{name : "difficulte",value : body.difficulty},{name : "confort", value : body.confort}]
+        const array_list = [{name : "parent_ident_equal_to_child",value : body.parent_ident_equal_to_child},{name : "name",value : body.name},{name : "description",value : body.description},{name : "distance",value : body.distance},{name : "presentation_image",value : req.file.filename},{name : "sejour_delay",value : body.sejour_delay},{name : "price", value : body.price},{name : "difficulte",value : body.difficulty},{name : "confort", value : body.confort},{name : "period",value : body.period}]
         for(let i of array_list){
+            console.log(i)
             if(i.value == "" || i.value == undefined){
                 console.log(i)
                 const message = "Champs requis"
@@ -28,7 +29,8 @@ module.exports = (app,child_road_model,parent_road_model) =>{
                                 sejour_delay : btoa(array_list[5].value),
                                 price : btoa(array_list[6].value),
                                 difficulty : btoa(array_list[7].value),
-                                confort : btoa(array_list[8].value)
+                                confort : btoa(array_list[8].value),
+                                period : btoa(array_list[9].value)
                             }).then((b)=>{
                                 const message = "Votre nouveau circuit a été ajouté avec succès"
                                 return res.json({message})
@@ -47,3 +49,4 @@ module.exports = (app,child_road_model,parent_road_model) =>{
     })
 }
 //fonctionnel
+// parser misy olana

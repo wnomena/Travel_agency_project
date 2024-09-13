@@ -2,15 +2,15 @@ const {mongoose,Schema} = require("mongoose")
 const schema = mongoose.model("utilisateur", new Schema({
     mail : {
         type : String,
-        require : true
+        required : true
     },
     mot_de_passe : {
         type : String,
-        require : true
+        required : true
     },
     nom_complet : {
         type : String,
-        require : true
+        required : true
     }
 }))
 module.exports = schema

@@ -1,8 +1,7 @@
 module.exports = async(commentary_model) =>{
     let table = []
     await commentary_model.find({}).then((a)=>{
-        if(a == "" || a == []){
-            
+        if(a.length == 0){
             table.push(0)
         }else{
             a.forEach(element => {

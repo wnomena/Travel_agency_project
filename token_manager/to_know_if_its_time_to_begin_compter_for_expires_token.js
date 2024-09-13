@@ -1,9 +1,11 @@
 const boucle_infinie = () =>{
     let intervalleID = setInterval(() => {
+        // console.log("token lancé")
         if(require("../bd/local_storage_for_token").length !== 0){
+            console.log(require("../bd/local_storage_for_token")[0])
             clearInterval(intervalleID)
-            console.log("xnxx")
             let x = setTimeout(() => {
+                // console.log("reset")
                 while (require("../bd/local_storage_for_token").length !== 0) {
                     require("../bd/local_storage_for_token").pop()
                 }
@@ -11,11 +13,10 @@ const boucle_infinie = () =>{
                 boucle_infinie()
             }, 3600000*8);
             let y = setInterval(() => {
-                console.log("commencement")
                 if(require("../bd/local_storage_for_token").length == 0){
                     clearTimeout(x)
                     clearInterval(y)
-                    console.log("fin")
+                    // console.log("fin")
                     boucle_infinie()
                 }
             }, 1000);

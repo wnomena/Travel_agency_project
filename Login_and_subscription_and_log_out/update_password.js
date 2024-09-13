@@ -1,6 +1,6 @@
 const auth = require("../token_manager/verification_of_created_token")
 module.exports = (app,model_utilisateur,bcrypt) =>{
-    app.put("/utilisateurs/update/password/:client_mail_for_updating",auth ,(req,res)=>{
+    app.put("/utilisateurs/update/password/:client_mail_for_updating" ,(req,res)=>{
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
     if( new_pass_and_last_pass_array[0].value == new_pass_and_last_pass_array[1].value){
         const message = "L'ancien mot de passe et le nouveau ne devrait pas être identique"
