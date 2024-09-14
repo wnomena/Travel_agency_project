@@ -1,4 +1,4 @@
-module.exports = (app,bcrypt,model) =>{
+module.exports = (app,bcrypt,model_member) =>{
     app.post("/login",(req,res) =>{
         const all_client_information = [{name : "mail",value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe}]
         for(let i = 0; i < all_client_information.length; i++){
@@ -8,33 +8,20 @@ module.exports = (app,bcrypt,model) =>{
             }
         }
         try {
-            model.find({mail : btoa(all_client_information[0].value)}).then((a)=>{
+            model_member.find({mail : btoa(all_client_information[0].value)}).then((a)=>{
                 if(a == "" || a == []){
                     const message = "Verifier votre adresse mail"
                     return res.status(400).json({message})
                 }else{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
-                            let message;
-                            if(a[0].mot_de_passe.length < 8){
-                                let token = await require("../token_manager/create_random_value")()
-                                while (require("../bd/local_storage_token_to_reset_password").length !== 0){
-                                    require("../bd/local_storage_token_to_reset_password").pop()
-                                }
-                                require("../bd/local_storage_token_to_reset_password").push(token)
-                                message = "Votre mot de passe est expiré, veuillez le changer"
-                                return res.json({message,token})
-                            }else{
-                                let token = await require("../token_manager/create_random_value")()
-                                for(let i = 0; i < require("../bd/local_storage_for_token").length + 1; i++){
-                                    require("../bd/local_storage_for_token").pop()
-                                }
-                                message = "Connexion reussi"
-                                require("../bd/local_storage_for_token").push(token)
-                                console.log(token)
-                                return res.json({message,token : token})
-                            }
-                        }else{
+                            const message = "Connexion reussi"
+                            return res.json({message,data : a[0].mot_de_passe})
+                        } else if(a[0].mot_de_passe == all_client_information[1].value) {
+                            const message = "-1"
+                            return res.json({message, data : a[0].mot_de_passe})
+                        }
+                        else{
                             const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
                             return res.status(400).json({message})
                         }

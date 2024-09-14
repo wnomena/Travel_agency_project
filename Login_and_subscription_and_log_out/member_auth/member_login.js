@@ -16,8 +16,12 @@ module.exports = (app,model_member,bcrypt) =>{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
                             const message = "Connexion reussi"
-                            return res.json({message})
-                        }else{
+                            return res.json({message, data : a[0].mot_de_passe})
+                        } else if(a[0].mot_de_passe == all_client_information[1].value) {
+                            const message = "-1"
+                            return res.json({message,data :  a[0].mot_de_passe})
+                        }
+                        else{
                             const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
                             return res.status(400).json({message})
                         }

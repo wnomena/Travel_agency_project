@@ -3,10 +3,10 @@
 module.exports = (mongoose) =>{
     (async()=>{
         try {
-          await mongoose.connect("mongodb+srv://sandaarnaud:yuW3J1CASUSwfc0q@capsurmada.yqfib.mongodb.net/?retryWrites=true&w=majority&appName=Capsurmada/all_value")
+          await mongoose.connect("mongodb+srv://wnomena58:Fifaliana2712@cluster0.2z4ay.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
           console.log("Connexion reussi")
         } catch (error) {
-            console.log("Le serveur ne veut pas se lancer ")
+            console.log("Le serveur ne veut pas se lancer ", error)
         }
     })()
 }
