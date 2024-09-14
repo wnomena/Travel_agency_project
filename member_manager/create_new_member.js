@@ -10,6 +10,7 @@ module.exports = (app,model_member) =>{
         }
         try {
             model_member.find({mail : btoa(all_value_sent_by_admin[1].value)}).then((a)=>{
+                console.log(all_value_sent_by_admin[1].value)
                 if(a == "" || a == []){
                     model_member.create({
                         nom_complet : btoa(all_value_sent_by_admin[0].value),

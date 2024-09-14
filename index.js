@@ -131,6 +131,8 @@ require("./Login_and_subscription_and_log_out/log_out")(app)
 require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_model)
 //get all commentary
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
+//get all admin or member
+require("./Login_and_subscription_and_log_out/get_all_admin_or_all_members")(app,member_model,model_utilisateur)
 //mamafa all
 require("./ho_fafana_ref_vita")(app)
 //member_forget_pass

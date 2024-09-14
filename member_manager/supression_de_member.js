@@ -1,6 +1,6 @@
 module.exports = (app,model_member,model_utilisateur) =>{
-    app.delete("/utilisateurs/delete_member/by_admin",(req,res)=>{
-        const mail_user_and_member = [{name : "user_mail",value : req.body.user_mail},{name : "member_mail",value : req.body.member_mail}]
+    app.delete("/utilisateurs/delete_member/by_admin/:user_mail/:member_mail",(req,res)=>{
+        const mail_user_and_member = [{name : "user_mail",value : req.params.user_mail},{name : "member_mail",value : req.params.member_mail}]
         for(let i of mail_user_and_member){
             if( i.value == undefined || i.value == ""){
                 const message = "Champs requis"
