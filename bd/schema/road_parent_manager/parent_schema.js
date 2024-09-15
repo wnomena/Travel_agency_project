@@ -25,11 +25,6 @@ const parent_road_model = mongoose.model("parent_road",new Schema({
         type : String,
         required : true
         },
-
-    price : {
-        type : String,
-        require : true
-    },
     difficulty : {
         type : String,
         require : true

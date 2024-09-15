@@ -22,6 +22,7 @@ module.exports = (app,model_member,bcrypt) =>{
                             return res.json({message,data :  a[0].mot_de_passe})
                         }
                         else{
+                            console.log(a[0].mot_de_passe,all_client_information[1].value)
                             const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
                             return res.status(400).json({message})
                         }
