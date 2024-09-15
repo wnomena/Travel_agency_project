@@ -72,7 +72,7 @@ require("./circuit_manager_only_by_admin/test_for_multer")(app)
 //get favorite road 
 require("./circuit_manager_only_by_admin/get_favorite_road")(app,child_road_model)
 //update member pass
-require("./Login_and_subscription_and_log_out/member_auth/update_member_password")(app,member_model,bcrypt)
+require("./Login_and_subscription_and_log_out/member_auth/update_member_password")(app,model_utilisateur,member_model)
 //put reaction
 require("./circuit_manager_only_by_admin/make_one_way_a _favorite_of_client")(app,child_road_model)
 //get all prent road to show client 

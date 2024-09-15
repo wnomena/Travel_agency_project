@@ -1,4 +1,4 @@
-// const auth = require("../../token_manager/verification_of_created_token")
+
 module.exports = (app,model_utilisateur,bcrypt) =>{
     app.put("/utilisateurs/update/password/admin/:client_mail_for_updating",(req,res)=>{
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
