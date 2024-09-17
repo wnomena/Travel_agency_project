@@ -19,11 +19,12 @@ module.exports = (app,model_utilisateurs,parent_road_model,child_road_model) =>{
                         const message = "Vérifiez votre choix et réessayer"
                         return res.status(400).json({message})
                     }
+                    console.log(b)
+                    find_and_unlink_many(child_road_model,tab[1].value)
                     child_road_model.deleteMany({ident_to_look_for_parent_ident : tab[1].value}).then((c)=>{
-                        find_and_unlink_many(child_road_model,tab[1].value)
+                        find_one_and_unlink(b[0].presentation_image.split("/")[b[0].presentation_image.split("/").length - 1])
                         parent_road_model.deleteOne({identifiant : tab[1].value}).then((d)=>{
 
-                            find_one_and_unlink(parent_road_model,)
                             const message = "Circuit effacé avec succès, ainsi que toutes les information lier à celui ci"
                             return res.json({message})
                         })
@@ -37,18 +38,15 @@ module.exports = (app,model_utilisateurs,parent_road_model,child_road_model) =>{
         }
     })
 }
-//effacer
- function find_and_unlink_many(model,id) {
+function find_and_unlink_many(model,id) {
     model.find({ident_to_look_for_parent_ident : id}).then((a) =>  {
        Array.from(a).forEach((res) => {
         console.log(a)
-        fs.unlink(`../file/${res.presentation_image.split("/")[res.presentation_image.split("/").length - 1]}`,(err) => console.log(err))
+        fs.unlink(`./file/${res.presentation_image.split("/")[res.presentation_image.split("/").length - 1]}`,(err) => console.log(err))
        })
     })
 }
-function find_one_and_unlink(model,id) {
-    model.find({identifiant : id}).then((a) => {
-        console.log(a)
-        fs.unlink(`../file/${a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1]}`,(err) => console.log(err))
-    })
+function find_one_and_unlink(name) {
+     fs.unlink(`./file/${name}`,(err) => console.log(err))
 }
+//ds

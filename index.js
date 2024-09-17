@@ -6,6 +6,7 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 console.log("hello node")
+const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
 function restriction_if_login_thre_time(a,b){
     let table = []
@@ -65,7 +66,8 @@ const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
-//all_way
+//all_ways
+app.get("/get_all_member",getAllMembers)
 //req image
 require("./circuit_manager_only_by_admin/get_image")(app)
 require("./circuit_manager_only_by_admin/test_for_multer")(app)
