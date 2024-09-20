@@ -5,6 +5,7 @@ const body_parser = require("body-parser")
 const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
+const port = process.env.PORT | 5000
 console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
@@ -142,6 +143,6 @@ require("./Login_and_subscription_and_log_out/member_auth/member_forget_password
 //fonction automatique pour expiration de token
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
-app.listen(5000,() => console.log("http://localhost:5000"))
+app.listen(ports,() => console.log("http://localhost:5000"))
 //route_necessaire
 //connexion
