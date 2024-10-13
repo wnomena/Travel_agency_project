@@ -12,7 +12,7 @@ module.exports = (app,parent_road_model) =>{
                     parent_road_model.findByIdAndUpdate(res[0]._id,{
                         description : btoa(body.description),
                         distance : btoa(body.distance),
-                        presentation_image : `http://localhost:5000/get/${req.file.filename}`,
+                        presentation_image : `http://web.caponmada.com/get/${req.file.filename}`,
                         sejours_delay : btoa(body.sejours_delay),
                         price : btoa(body.price),
                         difficulty : btoa(body.difficulty),
