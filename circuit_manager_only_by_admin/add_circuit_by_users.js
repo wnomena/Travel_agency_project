@@ -16,13 +16,13 @@ module.exports = (app,parent_road_model) =>{
                 return res.status(400).json({message})
             }
             else {
-                console.log("http://localhost:5000/get/" + req.file.filename)
+                console.log("https://web.caponmada.com/get/" + req.file.filename)
               const name_file =  req.file.originalname.split(" ").join("_")
             parent_road_model.create({
                 identifiant : await require("../bd/schema/function_aut_increment_ident_for_commentary_model")(parent_road_model),
                 name : btoa(tableau[0].value),
                 about_all_road : btoa(tableau[1].value),
-                presentation_image : "http://localhost:5000/get/" + name_file.toString(),
+                presentation_image : "https://web.caponmada.com/get/" + name_file.toString(),
                 confort : btoa(tableau[6].value),
                 price : btoa(tableau[3].value),
                 difficulty : btoa(tableau[4].value),

@@ -32,7 +32,7 @@ module.exports = (app,parent_road_model) =>{
                         }
                     }
                      else if(x == 2 && arr[x].value) {
-                        presentation_image = `http://localhost:5000/get/${arr[x].value}`
+                        presentation_image = `https://web.caponmada.com/get/${arr[x].value}`
                      }
                 }
                 parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, about_all_road : about_all_road, presentation_image : presentation_image,price : price}).then((a)=>{
