@@ -140,7 +140,10 @@ require("./Login_and_subscription_and_log_out/get_all_admin_or_all_members")(app
 require("./ho_fafana_ref_vita")(app)
 //member_forget_pass
 require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
+//create new admin by admin
+app.post("/add_new_admin/:admin/:new_admin/:nom_complet",require("./bd/add-new-admin"))
 //fonction automatique pour expiration de token
+
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
 app.listen(port,() => console.log("http://localhost:5000"))
