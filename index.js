@@ -67,6 +67,7 @@ const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
+const multer = require("multer")
 //all_ways
 app.get("/get_all_member",getAllMembers)
 //req image
@@ -144,5 +145,3 @@ require("./Login_and_subscription_and_log_out/member_auth/member_forget_password
 require("./token_manager/to_know_if_its_time_to_begin_compter_for_expires_token")()
 require("./token_manager/set_time_out_to_delete_value_in_random_reset_pass")()
 app.listen(port,() => console.log("http://localhost:5000"))
-//route_necessaire
-//connexion
