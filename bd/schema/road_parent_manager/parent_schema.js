@@ -1,6 +1,6 @@
 const { default: mongoose, Schema } = require("mongoose");
 
-const parent_road_model = mongoose.model("parent_road",new Schema({
+ const parent_road_model = mongoose.model("parent_road",new Schema({
     identifiant : {
         type : String,
         required : true
@@ -9,7 +9,7 @@ const parent_road_model = mongoose.model("parent_road",new Schema({
         type : String,
         required : true
     },
-    about_all_road : {
+    description : {
         type : String,
         required : true
     },

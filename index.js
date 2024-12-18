@@ -68,8 +68,14 @@ const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
 const multer = require("multer")
+const add_contact = require("../add_contact")
+const get_contact = require("../get_contact")
+const vue_contact = require("../vue_contact")
 //all_ways
 app.get("/get_all_member",getAllMembers)
+app.post("/client_contact",add_contact)
+app.get("/get_all_contact/:name",get_contact)
+app.put("/update_contact/:name",vue_contact)
 //req image
 require("./circuit_manager_only_by_admin/get_image")(app)
 require("./circuit_manager_only_by_admin/test_for_multer")(app)
@@ -97,6 +103,8 @@ require("./circuit_manager_only_by_admin/delete_parent_circuit_by_users")(app,mo
 require("./circuit_manager_only_by_admin/delete_all_child_of_one_parent")(app,child_road_model)
 //delete one child road bhy name 
 require("./circuit_manager_only_by_admin/delete_under_circuit_by_users")(app,child_road_model)
+//deleete member by other member
+require("./delete_member")(app,model_utilisateur,model_utilisateur)
 //ajout de nouveelle circuit parent
 require("./circuit_manager_only_by_admin/add_circuit_by_users")(app,parent_road_model)
 //ajout de nouveau circuit enfant
@@ -137,8 +145,6 @@ require("./commentary_by_member/delete_commentary_by_admin")(app,commentary_mode
 require("./commentary_by_member/get_all_commentary_to_show_in_page")(app,commentary_model)
 //get all admin or member
 require("./Login_and_subscription_and_log_out/get_all_admin_or_all_members")(app,member_model,model_utilisateur)
-//mamafa all
-require("./ho_fafana_ref_vita")(app)
 //member_forget_pass
 require("./Login_and_subscription_and_log_out/member_auth/member_forget_password")(app,member_model,bcrypt)
 //fonction automatique pour expiration de token
