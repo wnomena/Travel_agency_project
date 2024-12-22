@@ -1,10 +1,10 @@
-const {mongoose,Schema} = require("mongoose")
+const { default: mongoose ,Schema} = require("mongoose");
 const contact_model = mongoose.model("contact",new Schema({
     name : {
         type : String,
         required : true
-    }
-    ,mail : { 
+    },
+    mail : { 
         type : String,
         required : true
     },

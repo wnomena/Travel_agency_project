@@ -1,5 +1,6 @@
+const multer = require("../multer_middleware")
 module.exports = (app,model_utilisateur,bcrypt) =>{
-    app.put("/forget_pass/update_without_entering/old_pass/:mail",(req,res)=>{
+    app.put("/forget_pass/update_without_entering/old_pass/:mail",multer,(req,res)=>{
         if(req.params.mail == undefined || req.params.mail == ""){
             const message = "Vous n'avez pas l'autorisation nécessaire pour effectuer cette action"
             return res.status(401).json({message})            

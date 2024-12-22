@@ -54,7 +54,7 @@ app.use("/login/",(req,res,next)=>{
         return res.status(400).json({message})
     }
 })
-app.use(cookie_parser())
+// app.use(cookie_parser())
 //middleware pour gestion de token
 // app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
 
@@ -67,18 +67,17 @@ const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
 const parent_road_model = require("./bd/schema/road_parent_manager/parent_schema")
 const child_road_model = require("./bd/schema/road_child_manager/child_road_schema")
-const multer = require("multer")
-const add_contact = require("../add_contact")
-const get_contact = require("../get_contact")
-const vue_contact = require("../vue_contact")
+const multer = require("./multer_middleware")
+const add_contact = require("./add_contact")
+const get_contact = require("./get_contact")
+const vue_contact = require("./vue_contact")
 //all_ways
-app.get("/get_all_member",getAllMembers)
-app.post("/client_contact",add_contact)
+app.get("/get_all_member", getAllMembers)
+app.post("/client-contact",multer,add_contact)
 app.get("/get_all_contact/:name",get_contact)
-app.put("/update_contact/:name",vue_contact)
+app.put("/update_contact/:name",multer,vue_contact)
 //req image
 require("./circuit_manager_only_by_admin/get_image")(app)
-require("./circuit_manager_only_by_admin/test_for_multer")(app)
 //get favorite road 
 require("./circuit_manager_only_by_admin/get_favorite_road")(app,child_road_model)
 //update member pass

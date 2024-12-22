@@ -1,6 +1,6 @@
-// const auth = require("../../token_manager/verification_of_created_token")
+const multer = require("../../multer_middleware")
 module.exports = (app,model_utilisateur,model_member) =>{
-    app.put("/utilisateurs/update/password/member/:client_mail_for_updating/:type",(req,res)=>{
+    app.put("/utilisateurs/update/password/member/:client_mail_for_updating/:type",multer,(req,res)=>{
     console.log("lelena mandeana")
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
     const table_model = [model_member,model_utilisateur]

@@ -1,6 +1,6 @@
-//gestion de route de façon que ça commence par utiliateur
+const multer = require("../multer_middleware")
 module.exports = (app,model_member,model_utilisateurs) =>{
-    app.post("/utilisateurs/by_admin/create/new_member/:type",(req,res)=>{
+    app.post("/utilisateurs/by_admin/create/new_member/:type",multer,(req,res)=>{
         const all_value_sent_by_admin = [{name : "Name",value : req.body.nom_complet},{name : "mail",value : req.body.mail}]
         for(let i of all_value_sent_by_admin){
             if(i.value == "" || i.value == undefined){

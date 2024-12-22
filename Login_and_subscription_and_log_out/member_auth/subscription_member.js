@@ -1,6 +1,8 @@
+const multer = require("../../multer_middleware")
 module.exports = (app,member_model,bcrypt) =>{
-    app.post("/subscription_member",(req,res)=>{
+    app.post("/subscription_member",multer,async (req,res)=>{
         const element_array = [{name : "mail", value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe},{name : "nom_complet",value : req.body.nom_complet}]
+        console.log(req.body)
             for(let i = 0; i < element_array.length; i++){
                 console.log(element_array[i].value)
                 if(element_array[i].value == "" || element_array[i].value == undefined){

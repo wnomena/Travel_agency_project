@@ -8,10 +8,11 @@ module.exports = (app,parent_road_model) =>{
                      decrypted_value.push({
                         identifiant : a[i].identifiant,
                         name : atob(a[i].name),
-                        about_all_road : atob(a[i].about_all_road),
+                        description : atob(a[i].description),
                         presentation_image : a[i].presentation_image,
                         price : atob(a[i].price),
-                        period : atob(a[i].period)
+                        period : atob(a[i].period),
+                        difficulty : atob(a[i].difficulty)
                     })
                 }
                 console.log(decrypted_value)

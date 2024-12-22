@@ -1,11 +1,13 @@
 
 const multer = require("../multer_middleware")
 const url = require("../url")
+const split_join = require("../function_reutiliser/convertsppit")
 module.exports = (app,parent_road_model) =>{
     app.post("/utilisateurs/add_avant_post/by_user",multer,async(req,res)=>{
+        console.log(url)
         let body = req.body
         console.log(body)
-        const tableau = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file},{name : "prix", value : body.price},{name : "dificulter",value : body.difficulty},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "confort",value : body.confort}]
+        const tableau = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file.filename},{name : "prix", value : body.price},{name : "dificulter",value : body.difficulty},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "confort",value : body.confort}]
         for(let i of tableau){
              console.log(i)
             if(i.value == "" || i.value == undefined){
@@ -20,17 +22,15 @@ module.exports = (app,parent_road_model) =>{
                 return res.status(400).json({message})
             }
             else {
-                console.log(url + req.file.filename)
-              const name_file =  req.file.originalname.split(" ").join("_")
             parent_road_model.create({
                 identifiant : await require("../bd/schema/function_aut_increment_ident_for_commentary_model")(parent_road_model),
                 name : btoa(tableau[0].value),
-                about_all_road : btoa(tableau[1].value),
-                presentation_image : url + "/" + name_file.toString(),
+                description : btoa(tableau[1].value),
+                presentation_image : await split_join(tableau[2].value) ,
                 confort : btoa(tableau[6].value),
                 price : btoa(tableau[3].value),
                 difficulty : btoa(tableau[4].value),
-                period : tableau[5].value
+                period : btoa(tableau[5].value)
             }).then((_)=>{
                 const message = "Action done"
                 return res.json({message})

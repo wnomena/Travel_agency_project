@@ -1,5 +1,6 @@
+const multer = require("../multer_middleware")
 module.exports = (app,bcrypt,model) =>{
-    app.post("/utilisateurs/Login_and_subscription_and_log_out/subsscription",(req,res)=>{
+    app.post("/utilisateurs/Login_and_subscription_and_log_out/subsscription",multer,(req,res)=>{
             const element_array = [{name : "mail", value : req.body.mail},{name : "mot_de_passe",value : req.body.mot_de_passe},{name : "nom_complet",value : req.body.nom_complet}]
             for(let i = 0; i < element_array.length; i++){
                 console.log("mande le boucle")

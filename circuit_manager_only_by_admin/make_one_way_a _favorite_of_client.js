@@ -1,8 +1,6 @@
-const commentary_model = require("../bd/schema/commentary_schema")
-const function_aut_increment_ident_for_commentary_model = require("../bd/schema/function_aut_increment_ident_for_commentary_model")
-let date = new Date()
+const multer = require("../multer_middleware")
 module.exports = (app,child_road_model) =>{
-    app.put("/update/one_child_road/to_be_a_favorite/:member_mail/:road_name",(req,res)=>{
+    app.put("/update/one_child_road/to_be_a_favorite/:member_mail/:road_name",multer,(req,res)=>{
         const request_value = [{name : "member_mail",value : req.params.member_mail},{name: "road_name",value : req.params.road_name}]
         for(let i of request_value){
             console.log(i)

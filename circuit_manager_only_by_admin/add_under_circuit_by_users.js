@@ -25,7 +25,7 @@ module.exports = (app,child_road_model,parent_road_model) =>{
                                 name : btoa(array_list[1].value),
                                 description : btoa(array_list[2].value),
                                 distance : btoa(array_list[3].value),
-                                presentation_image : `${url}/${array_list[4].value}`,
+                                presentation_image : await require("../function_reutiliser/convertsppit")(array_list[4].value),
                                 sejour_delay : btoa(array_list[5].value),
                                 price : btoa(array_list[6].value),
                                 difficulty : btoa(array_list[7].value),
