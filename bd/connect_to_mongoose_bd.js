@@ -11,4 +11,4 @@ module.exports = (mongoose) =>{
     })()
 }
 // mongodb+srv://sandaarnaud:yuW3J1CASUSwfc0q@capsurmada.yqfib.mongodb.net/?retryWrites=true&w=majority&appName=Capsurmada
-//mongodb://localhost:27017/agence_de_voyage
+//mongodb+srv://wnomena58:Fifaliana2712@cluster0.2z4ay.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

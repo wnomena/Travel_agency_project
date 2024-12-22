@@ -1,6 +1,7 @@
+const multer = require("../multer_middleware")
 
 module.exports = (app,model_utilisateur,bcrypt) =>{
-    app.put("/utilisateurs/update/password/admin/:client_mail_for_updating",(req,res)=>{
+    app.put("/utilisateurs/update/password/admin/:client_mail_for_updating",multer,(req,res)=>{
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
     if( new_pass_and_last_pass_array[0].value == new_pass_and_last_pass_array[1].value){
         const message = "L'ancien mot de passe et le nouveau ne devrait pas être identique"

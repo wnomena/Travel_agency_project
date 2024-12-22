@@ -1,16 +1,18 @@
 const multer = require("../multer_middleware")
 module.exports = (app,parent_road_model) =>{
     app.put("/utilisateurs/update_parent_road/by_user/:id",multer,(req,res)=>{
-        const body = JSON.parse(req.body.body)
-         const arr = [{name : "name",value : body.name},{name : "description",value : body.about_all_road},{name : "presentation_image",value : req.file.filename},{name : "price",value : body.price}]
+        const body = req.body
+         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file.filename},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty}]
         if(req.params.id == undefined || req.params.id == ""){
-            const message = "Champs requis"
+            const message = "Required Field"
             return res.status(400).json({message})
         }
         let name = btoa(arr[0].value);
-        let about_all_road = btoa(arr[1].value);
+        let description = btoa(arr[1].value);
         let presentation_image = btoa(arr[2].value);
         let price = btoa(arr[3].value);
+        let period = btoa(arr[4].value)
+        let difficulty = btoa(arr[5].value)
         try {
             parent_road_model.find({identifiant : req.params.id}).then(async(a)=>{
                 for(let x = 0; x < arr.length; x++){
@@ -22,26 +24,32 @@ module.exports = (app,parent_road_model) =>{
                                 name = a[0].name
                                 break;
                             case 1:
-                                about_all_road = a[0].about_all_road
+                                description = a[0].description
                                 break;
                             case 2:
                                 presentation_image = a[0].presentation_image
                                 break;
-                            default : 
+                            case 3 : 
                                 price = a[0].price
+                                break;
+                            case 4:
+                                period = a[0].period
+                                break;
+                            default:
+                                difficulty = a[0].difficulty
                         }
                     }
                      else if(x == 2 && arr[x].value) {
-                        presentation_image = `http://localhost:5000/get/${arr[x].value}`
+                        presentation_image = `${url}/${arr[x].value}`
                      }
                 }
-                parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, about_all_road : about_all_road, presentation_image : presentation_image,price : price}).then((a)=>{
-                    const message = "Modification effectué avec succès"
+                parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty}).then((a)=>{
+                    const message = "Mopdification done"
                     return res.json({message})
                 })
             })
         } catch (error) {
-            const message = "Le serveur ne répond pas, veuillez réessayer plsu tard"
+            const message = "Server crached"
             return res.status(500).json({message,error})
         }
 

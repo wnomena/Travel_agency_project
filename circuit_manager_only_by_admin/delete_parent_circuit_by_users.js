@@ -10,10 +10,10 @@ module.exports = (app,model_utilisateurs,parent_road_model,child_road_model) =>{
         }
         try {
             model_utilisateurs.find({mail : btoa(tab[0].value)}).then((a)=>{
-                if(a == "" ||a == []){
-                    const message = "Accès non autorisé"
-                    return res.status(403).jsson({message})
-                }
+                // if(a == "" ||a == []){
+                //     const message = "Accès non autorisé"
+                //     return res.status(403).jsson({message})
+                // }
                 parent_road_model.find({identifiant : tab[1].value}).then((b)=>{
                     if(b == "" ||b == []){
                         const message = "Vérifiez votre choix et réessayer"
