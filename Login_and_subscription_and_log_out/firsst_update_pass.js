@@ -1,7 +1,8 @@
 const multer = require("../multer_middleware")
 
-module.exports = (app,model_utilisateur,bcrypt) =>{
-    app.put("/utilisateurs/update/password/admin/:client_mail_for_updating",multer,(req,res)=>{
+module.exports = (app,model_utilisateur,model_member,bcrypt) =>{
+    app.put("/utilisateurs/update/password/admin/:client_mail_for_updating/:type",multer,(req,res)=>{
+        const model = [model_utilisateur,model_utilisateur]
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
     if( new_pass_and_last_pass_array[0].value == new_pass_and_last_pass_array[1].value){
         const message = "L'ancien mot de passe et le nouveau ne devrait pas être identique"
@@ -16,14 +17,14 @@ module.exports = (app,model_utilisateur,bcrypt) =>{
         }
     }
     try {
-        model_utilisateur.find({mail : btoa(req.params.client_mail_for_updating)}).then((a)=>{
+        model[parseInt(req.params.type)].find({mail : btoa(req.params.client_mail_for_updating)}).then((a)=>{
             if(a.length == 0){
                 const message = "Please, use an other mail"
                 return res.status(400).json({message})
             }else{
                 if(a[0].mot_de_passe == new_pass_and_last_pass_array[1].value){
                     bcrypt.hash(new_pass_and_last_pass_array[1].value,10).then((c)=>{
-                        model_utilisateur.findByIdAndUpdate(a[0]._id,{mot_de_passe : c}).then((d)=>{
+                        model[parseInt(req.params.type)].findByIdAndUpdate(a[0]._id,{mot_de_passe : c}).then((d)=>{
                             const message = "Password updated"
                             console.log("updated")
                             return res.json({message})
@@ -34,7 +35,7 @@ module.exports = (app,model_utilisateur,bcrypt) =>{
                     bcrypt.compare(new_pass_and_last_pass_array[0].value,a[0].mot_de_passe).then((b)=>{
                         if(b){
                             bcrypt.hash(new_pass_and_last_pass_array[1].value,10).then((c)=>{
-                                model_utilisateur.findByIdAndUpdate(a[0]._id,{mot_de_passe : c}).then((d)=>{
+                                model[parseInt(req.params.type)].findByIdAndUpdate(a[0]._id,{mot_de_passe : c}).then((d)=>{
                                     const message = "Password updated"
                                     console.log("updated")
                                     return res.json({message})
