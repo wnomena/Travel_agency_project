@@ -12,12 +12,12 @@ module.exports = (app,model_member,bcrypt) =>{
             model_member.find({mail : btoa(all_client_information[0].value)}).then((a)=>{
                 console.log(a)
                 if(a.length == 0){
-                    const message = "use another mail"
+                    const message = "Use another mail"
                     return res.status(400).json({message})
                 }else{
                     bcrypt.compare(all_client_information[1].value,a[0].mot_de_passe).then(async(c)=>{
                         if(c){
-                            const message = "Connexion reussi"
+                            const message = "Connexion done"
                             return res.json({message, data : a[0].mot_de_passe})
                         } else if(a[0].mot_de_passe == all_client_information[1].value) {
                             const message = "-1"
@@ -25,7 +25,7 @@ module.exports = (app,model_member,bcrypt) =>{
                         }
                         else{
                             console.log(a[0].mot_de_passe,all_client_information[1].value)
-                            const message = "Votre mot de passe est éronné, veuillez le vérifier et lessayer à nouveau"
+                            const message = "Wrong password"
                             return res.status(400).json({message})
                         }
                     })

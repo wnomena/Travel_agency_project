@@ -44,16 +44,6 @@ app.use((req,res,next)=>{
     console.log(req.url)
     next()
 })
-app.use("/login/",(req,res,next)=>{
-
-    let resultat = restriction_if_login_thre_time("login",req.body.mail)
-    if(resultat[0].acces){
-        next()
-    }else{
-        const message = resultat[0].message
-        return res.status(400).json({message})
-    }
-})
 // app.use(cookie_parser())
 //middleware pour gestion de token
 // app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
@@ -71,6 +61,8 @@ const multer = require("./multer_middleware")
 const add_contact = require("./add_contact")
 const get_contact = require("./get_contact")
 const vue_contact = require("./vue_contact")
+const { contact_model } = require("./bd/schema/contact_schema")
+// require("./function")(model_utilisateur)
 //all_ways
 app.get("/get_all_member", getAllMembers)
 app.post("/client-contact",multer,add_contact)
@@ -109,7 +101,7 @@ require("./circuit_manager_only_by_admin/add_circuit_by_users")(app,parent_road_
 //ajout de nouveau circuit enfant
 require("./circuit_manager_only_by_admin/add_under_circuit_by_users")(app,child_road_model,parent_road_model)
 //creation de nouveau member par un admin
-require("./member_manager/create_new_member")(app,member_model)
+require("./member_manager/create_new_member")(app,model_utilisateur)
 //supression de member par un admin
 require("./member_manager/supression_de_member")(app,member_model,model_utilisateur)
 //susscription_member
