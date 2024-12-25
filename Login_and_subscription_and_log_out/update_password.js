@@ -1,14 +1,18 @@
 const multer = require("../multer_middleware")
-module.exports = (app,model_utilisateur,model_member,bcrypt) =>{
+const bcrypt = require("bcryptjs")
+module.exports = (app,model_utilisateur,model_member) =>{
     const model = [model_member,model_utilisateur]
     app.put("/utilisateurs/update/password/admin/:client_mail_for_updating/:type",multer,(req,res)=>{
     const new_pass_and_last_pass_array = [{name : "old_pass",value : req.body.old_pass},{name : "new_pass",value : req.body.new_pass}]
-    if( new_pass_and_last_pass_array[0].value == new_pass_and_last_pass_array[1].value){
+    const hash = bcrypt.hash(new_pass_and_last_pass_array[1].value,10)
+    console.log(hash)
+    if( new_pass_and_last_pass_array[0].value !== new_pass_and_last_pass_array[1].value){
         const message = "Password not identical"
         res.status(400).json({message})
         return false
     }
     for(let i = 0; i < new_pass_and_last_pass_array.length; i++){
+        console.log(new_pass_and_last_pass_array[i].value)
         if(new_pass_and_last_pass_array[i].value == "" || new_pass_and_last_pass_array[i].value == undefined){
             const message = "required field"
             res.status(400).json({message})
