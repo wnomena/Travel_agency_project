@@ -36,17 +36,14 @@ function restriction_if_login_thre_time(a,b){
     return table
 }
 require("./bd/connect_to_mongoose_bd")(mongoose)
-//all middelwares
 app.use(express.json())
 app.use(cors())
+app.use(cookie_parser())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
 })
-// app.use(cookie_parser())
-//middleware pour gestion de token
-// app.use("/utilisateurs/",require("./token_manager/verification_of_created_token"))
 
 app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
@@ -61,9 +58,6 @@ const multer = require("./multer_middleware")
 const add_contact = require("./add_contact")
 const get_contact = require("./get_contact")
 const vue_contact = require("./vue_contact")
-const { contact_model } = require("./bd/schema/contact_schema")
-// require("./function")(model_utilisateur)
-//all_ways
 app.get("/get_all_member", getAllMembers)
 app.post("/client-contact",multer,add_contact)
 app.get("/get_all_contact/:name",get_contact)
