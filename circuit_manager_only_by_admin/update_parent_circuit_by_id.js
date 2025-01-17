@@ -1,8 +1,9 @@
 const multer = require("../multer_middleware")
+const {  unlink_function } = require("../unlink_function")
 module.exports = (app,parent_road_model) =>{
     app.put("/utilisateurs/update_parent_road/by_user/:id",multer,(req,res)=>{
         const body = req.body
-         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file.filename},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty}]
+         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined },{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty}]
         if(req.params.id == undefined || req.params.id == ""){
             const message = "Required Field"
             return res.status(400).json({message})
@@ -40,7 +41,8 @@ module.exports = (app,parent_road_model) =>{
                         }
                     }
                      else if(x == 2 && arr[x].value) {
-                        presentation_image = `${url}/${arr[x].value}`
+                        unlink_function(a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1])
+                        presentation_image = `${url}/get/${arr[x].value}`
                      }
                 }
                 parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty}).then((a)=>{
