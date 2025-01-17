@@ -4,7 +4,7 @@ module.exports = (app,child_road_model,parent_road_model) =>{
     app.post("/utilisateurs/add_unders/circuit/by_users",multer,(req,res)=>{
         console.log(req.file)
         let body = req.body
-        const array_list = [{name : "parent_ident_equal_to_child",value : body.parent_ident_equal_to_child},{name : "name",value : body.name},{name : "description",value : body.description},{name : "distance",value : body.distance},{name : "presentation_image",value : req.file.filename},{name : "sejour_delay",value : `${body.sejours_delais_B} ${body.sejours_delais_E}`},{name : "price", value : body.price},{name : "difficulte",value : body.difficulty},{name : "confort", value : body.confort},{name : "period",value : `${body.period_B} ${body.period_E}`}]
+        const array_list = [{name : "parent_ident_equal_to_child",value : body.parent_ident_equal_to_child},{name : "name",value : body.name},{name : "description",value : body.description},{name : "distance",value : body.distance},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "sejour_delay",value : `${body.sejours_delais_B} ${body.sejours_delais_E}`},{name : "price", value : body.price},{name : "difficulte",value : body.difficulty},{name : "confort", value : body.confort},{name : "period",value : `${body.period_B} ${body.period_E}`}]
         for(let i of array_list){
             console.log(i)
             if(i.value == "" || i.value == undefined){
@@ -37,7 +37,7 @@ module.exports = (app,child_road_model,parent_road_model) =>{
                                 return res.json({message})
                             })
                         }else{
-                            const message = "use other name"
+                            const message = "Use other name"
                             return res.status(400).json({message})
                         }
                     })
