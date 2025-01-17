@@ -2,11 +2,8 @@ const multer = require("../multer_middleware")
 module.exports = (app,parent_road_model) =>{
     app.put("/utilisateurs/update_child_way/by_user",multer,(req,res)=>{
         const body = req.body
-         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file.filename},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort}]
-        if(req.params.id == undefined || req.params.id == ""){
-            const message = "Required Field"
-            return res.status(400).json({message})
-        }
+        console.log(body) //teste
+         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort}]
         let name = btoa(arr[0].value);
         let description = btoa(arr[1].value);
         let presentation_image = btoa(arr[2].value);
@@ -18,7 +15,9 @@ module.exports = (app,parent_road_model) =>{
         let confort  = btoa(arr[8].value);
         // like_by_members parent_ident_equal_to_child
         try {
-            parent_road_model.find({identifiant : req.params.id}).then(async(a)=>{
+            parent_road_model.find({name : btoa(req.body.name)}).then(async(a)=>{
+                console.log(a)
+                name = a[0].name
                 for(let x = 0; x < arr.length; x++){
                     console.log(arr[x].value)
                     if(arr[x].value == undefined || arr[x].value == ""){
@@ -53,10 +52,11 @@ module.exports = (app,parent_road_model) =>{
                         }
                     }
                      else if(x == 2 && arr[x].value) {
-                        presentation_image = `${url}/${arr[x].value}`
+                        unlink_function(a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1])
+                        presentation_image = `${url}/get/${arr[x].value}`
                      }
                 }
-                parent_road_model.findByIdAndUpdate(a[0]._id,{identifiant : req.params.id,name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty, distance : distance,sejours_delay : sejours_delay, confort : confort}).then((a)=>{
+                parent_road_model.findByIdAndUpdate(a[0]._id,{parent_ident_equal_to_child : req.body.parent_ident_equal_to_child,name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty, distance : distance,sejours_delay : sejours_delay, confort : confort}).then((a)=>{
                     const message = "Mopdification done"
                     return res.json({message})
                 })

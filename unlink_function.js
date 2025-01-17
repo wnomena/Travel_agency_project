@@ -1,5 +1,5 @@
-import { unlink } from "fs"
-export default (name) => {
+const { unlink } = require("fs")
+module.exports = (name) => {
     try {
         unlink(`${_dirname}/../file/${name}`,() => {
             console.log("file deleted")
