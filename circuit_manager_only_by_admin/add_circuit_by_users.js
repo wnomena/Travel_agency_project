@@ -11,7 +11,7 @@ module.exports = (app,parent_road_model) =>{
         for(let i of tableau){
              console.log(i)
             if(i.value == "" || i.value == undefined){
-                const message = "Required field"
+                const message = `Required field ${i.name}`
                 return res.status(400).json({message})
             }
         }
