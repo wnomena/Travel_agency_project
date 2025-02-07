@@ -1,3 +1,3 @@
 module.exports = async (name) => {
-    return`https://nomena.caponmada.com/get/${await name.split(" ").join("_")}`
+    return`https://travel-agency-project.onrender.com/get/${await name.split(" ").join("_")}`
 }
