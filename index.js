@@ -39,6 +39,11 @@ require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
 app.use(cors({
     origin : "https://caponmada.com",
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Response-Time'],
+    credentials: true,
+    preflightContinue: false,
     optionsSuccessStatus : 200
 }))
 app.use(cookie_parser())
