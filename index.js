@@ -6,55 +6,15 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 const port = process.env.PORT | 5000
-console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
-function restriction_if_login_thre_time(a,b){
-    let table = []
-    console.log(`return : ${a}`)
-    if(require("./bd/local_restrinction_for_connexion_link_users").length > 3){
-        if(JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 1]) == JSON.stringify({link : a,mail : b}) && JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 2]) == JSON.stringify({link : a,mail : b})){
-            const message = "Trop de tentative, veuillez réessayer plus tard"
-            while(table.length !== 0){
-                table.pop()
-            }
-            table.push({message,acces : false})
-        }else{
-            const message = "Acces autorisé"
-            while(table.length !== 0){
-                table.pop()
-            }
-            table.push({message,acces : true})
-        }
-    }else{
-        while(table.length !== 0){
-            table.pop()
-        }
-        const message = "Acces autorisé"
-        table.push({message,acces : true})
-    }
-    return table
-}
+
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
-app.use(cors({
-    origin : "https://caponmada.com",
-    methods: ['GET','HEAD','PUT','PATCH','POST','DELETE'],
-    exposedHeaders: ['Content-Length', 'X-Response-Time'],
-    credentials: true,
-    preflightContinue: true,
-    optionsSuccessStatus : 200
-}))
-app.use(cookie_parser())
-app.use(body_parser.urlencoded({extended : true}))
+app.use(cors())
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
-})
-
-app.get("/",(req,res)=>{
-    let a = btoa("rakotoarimalala")
-    res.json(a)
 })
 const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
