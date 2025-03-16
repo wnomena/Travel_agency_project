@@ -7,7 +7,6 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 const port = process.env.PORT | 5000
-console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
 function restriction_if_login_thre_time(a,b){
@@ -47,6 +46,7 @@ app.use(cors({
     preflightContinue: false,
     optionsSuccessStatus : 200
 }))
+
 app.use(cookie_parser())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
@@ -58,7 +58,6 @@ app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
     res.json(a)
 })
-db2()
 const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
