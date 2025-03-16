@@ -6,7 +6,6 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 const port = process.env.PORT | 5000
-console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
 function restriction_if_login_thre_time(a,b){
