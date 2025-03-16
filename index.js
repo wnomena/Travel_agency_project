@@ -36,23 +36,12 @@ function restriction_if_login_thre_time(a,b){
 }
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
-app.use(cors({
-    origin : ["https://wwww.caponmada.com","http://localhost:3000"],
-    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Length', 'X-Response-Time'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus : 200
-}))
+app.use(cors())
 
-app.use(cookie_parser())
-app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
 })
-
 app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
     res.json(a)
