@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
         to: "sandaarnaud@gmail.com", // list of receivers
         subject: "New client", // Subject line
         text: ``, // plain text body
-        html: `<h1>New task for ${name}<${mail}> </h1>  \n <h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
+        html: `<h1>New task for ${name} with mail : ${mail} </h1>  \n <h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
       });
     
       console.log("Message sent: %s", info.messageId);
