@@ -4,6 +4,7 @@ const url = require("../url")
 const split_join = require("../function_reutiliser/convertsppit")
 module.exports = (app,parent_road_model) =>{
     app.post("/utilisateurs/add_avant_post/by_user",multer,async(req,res)=>{
+        try {
         console.log(url)
         let body = req.body
         console.log(body)
@@ -11,11 +12,11 @@ module.exports = (app,parent_road_model) =>{
         for(let i of tableau){
              console.log(i)
             if(i.value == "" || i.value == undefined){
-                const message = "Required field"
+                const message = `Required field ${i.name}`
                 return res.status(400).json({message})
             }
         }
-        try {
+        
         parent_road_model.find({name : btoa(tableau[0].value)}).then(async(a)=>{
             if(a.length !== 0) {
                 const message = "Use other name"

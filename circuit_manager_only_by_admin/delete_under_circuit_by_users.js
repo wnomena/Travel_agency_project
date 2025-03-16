@@ -9,12 +9,12 @@ module.exports = (app,child_road_model) =>{
             return res.stauts(400).json({message})
         }
         try {
-            child_road_model.find({name : btoa(req.params.name)}).then((a)=>{
+            child_road_model.find({_id : req.params.name}).then((a)=>{
                 if(a == "" || a == undefined){
                 const message = "Veuillez vérifier l'élément à supprimer"
                 return res.stauts(400).json({message})
                 }
-                child_road_model.deleteOne({name : btoa(req.params.name)}).then((b)=>{
+                child_road_model.deleteOne({_id : req.params.name}).then((b)=>{
                     find_one_and_unlink(a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1])
                     const message = "Action effectuer avec succès"
                     return res.json({message})

@@ -37,7 +37,15 @@ function restriction_if_login_thre_time(a,b){
 }
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin : "https://caponmada.com",
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Response-Time'],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus : 200
+}))
 app.use(cookie_parser())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
@@ -58,6 +66,8 @@ const multer = require("./multer_middleware")
 const add_contact = require("./add_contact")
 const get_contact = require("./get_contact")
 const vue_contact = require("./vue_contact")
+const { contact_model } = require("./bd/schema/contact_schema")
+// require("./function")(child_road_model)
 app.get("/get_all_member", getAllMembers)
 app.post("/client-contact",multer,add_contact)
 app.get("/get_all_contact/:name",get_contact)

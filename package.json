@@ -18,13 +18,16 @@
     "cookies-parser": "^1.2.0",
     "cors": "^2.8.5",
     "depd": "^2.0.0",
+    "dotenv": "^16.4.7",
     "express": "^4.19.2",
     "mongodb": "^6.9.0",
     "mongoose": "^8.4.0",
     "mongoshell": "^1.0.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.13",
-    "nodemon": "^3.1.0"
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.10.0",
+    "nodemon": "^3.1.0",
+    "resend": "^4.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
