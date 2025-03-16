@@ -37,7 +37,7 @@ function restriction_if_login_thre_time(a,b){
 }
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
-app.use(cors())
+app.use(cors(origin : "https://www.caponmada.com"))
 app.use(cookie_parser())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
