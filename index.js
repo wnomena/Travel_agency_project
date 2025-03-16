@@ -2,7 +2,6 @@ const express = require("express")
 const bcrypt = require("bcryptjs")
 const cors = require("cors")
 const body_parser = require("body-parser")
-const {db2 }= require("./bd/mysql.connexion")
 const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
@@ -38,7 +37,7 @@ function restriction_if_login_thre_time(a,b){
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
 app.use(cors({
-    origin : "https://wwww.caponmada.com",
+    origin : ["https://wwww.caponmada.com","http://localhost:3000"],
     methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Content-Length', 'X-Response-Time'],
