@@ -1,7 +1,9 @@
 const { contact_model } = require("./bd/schema/contact_schema")
 const multer = require("./multer_middleware")
+const { main } = require("./sendmail")
 module.exports = (req,res) => {
     console.log(req.body.mail)
+    main(req.body.name,req.body.mail,req.body.object,req.body.corp)
     try {
         contact_model.create({
             name : req.body.name,

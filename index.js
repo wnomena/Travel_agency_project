@@ -2,6 +2,7 @@ const express = require("express")
 const bcrypt = require("bcryptjs")
 const cors = require("cors")
 const body_parser = require("body-parser")
+const {db2 }= require("./bd/mysql.connexion")
 const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
@@ -36,7 +37,16 @@ function restriction_if_login_thre_time(a,b){
 }
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
-app.use(cors(origin : "https://www.caponmada.com"))
+app.use(cors({
+    origin : "https://wwww.caponmada.com",
+    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Length', 'X-Response-Time'],
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus : 200
+}))
+
 app.use(cookie_parser())
 app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
@@ -57,6 +67,8 @@ const multer = require("./multer_middleware")
 const add_contact = require("./add_contact")
 const get_contact = require("./get_contact")
 const vue_contact = require("./vue_contact")
+const { contact_model } = require("./bd/schema/contact_schema")
+// require("./function")(child_road_model)
 app.get("/get_all_member", getAllMembers)
 app.post("/client-contact",multer,add_contact)
 app.get("/get_all_contact/:name",get_contact)

@@ -1,4 +1,4 @@
-const url = "http://localhost:5000/get/"
+const url = "https://travel-agency-project.onrender.com/get/"
 module.exports = {
     url : url
 }
