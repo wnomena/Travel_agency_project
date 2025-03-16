@@ -17,8 +17,8 @@ const transporter = nodemailer.createTransport({
         from: '"Service client CAPONMADA" <MS_m62Ww2@trial-0r83ql37r3pgzw1j.mlsender.net>', // sender address
         to: "sandaarnaud@gmail.com", // list of receivers
         subject: "New client", // Subject line
-        text: `New task for ${name}<${mail}>`, // plain text body
-        html: `<h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
+        text: ``, // plain text body
+        html: `<h1>New task for ${name}<${mail}> </h1>  \n <h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
       });
     
       console.log("Message sent: %s", info.messageId);
