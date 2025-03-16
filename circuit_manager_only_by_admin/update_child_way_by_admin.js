@@ -2,7 +2,6 @@ const multer = require("../multer_middleware")
 module.exports = (app,parent_road_model) =>{
     app.put("/utilisateurs/update_child_way/by_user",multer,(req,res)=>{
         const body = req.body
-        console.log(body) //teste
          const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort}]
         let name = btoa(arr[0].value);
         let description = btoa(arr[1].value);
@@ -13,15 +12,11 @@ module.exports = (app,parent_road_model) =>{
         let distance = btoa(arr[6].value);
         let sejours_delay = btoa(arr[7].value);
         let confort  = btoa(arr[8].value);
-        // like_by_members parent_ident_equal_to_child
         try {
-            parent_road_model.find({name : btoa(req.body.name)}).then(async(a)=>{
-                console.log(a)
-                name = a[0].name
+            parent_road_model.find({_id : req.body._id}).then(async(a)=>{
+            console.log(a)
                 for(let x = 0; x < arr.length; x++){
-                    console.log(arr[x].value)
                     if(arr[x].value == undefined || arr[x].value == ""){
-                        console.log(arr[x].value)
                         switch (x) {
                             case 0:
                                 name = a[0].name
@@ -56,7 +51,7 @@ module.exports = (app,parent_road_model) =>{
                         presentation_image = `${url}/get/${arr[x].value}`
                      }
                 }
-                parent_road_model.findByIdAndUpdate(a[0]._id,{parent_ident_equal_to_child : req.body.parent_ident_equal_to_child,name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty, distance : distance,sejours_delay : sejours_delay, confort : confort}).then((a)=>{
+                parent_road_model.findByIdAndUpdate(a[0]._id,{name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty, distance : distance,sejours_delay : sejours_delay, confort : confort}).then((a)=>{
                     const message = "Mopdification done"
                     return res.json({message})
                 })

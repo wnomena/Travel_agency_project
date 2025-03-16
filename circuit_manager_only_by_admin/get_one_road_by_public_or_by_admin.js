@@ -5,7 +5,7 @@ module.exports = (app,child_road_model) =>{
             return res.status(400).json({message})
         }
         try {
-            child_road_model.find({name : btoa(req.params.by_name)}).then((a)=>{
+            child_road_model.find({_id : req.params.by_name}).then((a)=>{
                 if(a == "" || a == []){
                     const message = "Résultat vide"
                     return res.json({message})
@@ -13,6 +13,7 @@ module.exports = (app,child_road_model) =>{
                     const message = "On a trouver un résultat"
                     console.log(atob(a[0].name))
                     return res.json({message,data : {
+                        _id : a[0]._id,
                         parent_ident_equal_to_child: a[0].parent_ident_equal_to_child,
                         name: atob(a[0].name),
                         description: atob(a[0].description),
@@ -30,6 +31,7 @@ module.exports = (app,child_road_model) =>{
                     let decryptage_value = []
                     for(let i = 0; i < a.length; i++){
                         decryptage_value.push({
+                            _id : a[0]._id,
                             parent_ident_equal_to_child: a[i].parent_ident_equal_to_child,
                             name: atob(a[i].name),
                             description: atob(a[i].description),
@@ -53,3 +55,4 @@ module.exports = (app,child_road_model) =>{
         }
     })
 }
+//misy zavatra voasopna
