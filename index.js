@@ -6,17 +6,15 @@ const app = express()
 const mongoose = require("mongoose")
 const cookie_parser = require("cookie-parser")
 const port = process.env.PORT | 5000
-console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
 require("./bd/connect_to_mongoose_bd")(mongoose)
+app.use(express.json())
 app.use(cors())
-app.use(cookie_parser())
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
 })
-
 app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
     res.json(a)
