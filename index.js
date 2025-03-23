@@ -8,36 +8,9 @@ const cookie_parser = require("cookie-parser")
 const port = process.env.PORT | 5000
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
-function restriction_if_login_thre_time(a,b){
-    let table = []
-    console.log(`return : ${a}`)
-    if(require("./bd/local_restrinction_for_connexion_link_users").length > 3){
-        if(JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 1]) == JSON.stringify({link : a,mail : b}) && JSON.stringify(require("./bd/local_restrinction_for_connexion_link_users")[require("./bd/local_restrinction_for_connexion_link_users").length - 2]) == JSON.stringify({link : a,mail : b})){
-            const message = "Trop de tentative, veuillez réessayer plus tard"
-            while(table.length !== 0){
-                table.pop()
-            }
-            table.push({message,acces : false})
-        }else{
-            const message = "Acces autorisé"
-            while(table.length !== 0){
-                table.pop()
-            }
-            table.push({message,acces : true})
-        }
-    }else{
-        while(table.length !== 0){
-            table.pop()
-        }
-        const message = "Acces autorisé"
-        table.push({message,acces : true})
-    }
-    return table
-}
 require("./bd/connect_to_mongoose_bd")(mongoose)
 app.use(express.json())
 app.use(cors())
-
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
@@ -46,6 +19,7 @@ app.get("/",(req,res)=>{
     let a = btoa("rakotoarimalala")
     res.json(a)
 })
+
 const  model_utilisateur = require("./bd/schema/schema_users")
 const commentary_model = require("./bd/schema/commentary_schema")
 const member_model = require("./bd/schema/member_schema")
@@ -56,9 +30,12 @@ const add_contact = require("./add_contact")
 const get_contact = require("./get_contact")
 const vue_contact = require("./vue_contact")
 const { contact_model } = require("./bd/schema/contact_schema")
+const add_contact2 = require("./add_contact2")
+// require("./delete")(child_road_model)
 // require("./function")(child_road_model)
 app.get("/get_all_member", getAllMembers)
 app.post("/client-contact",multer,add_contact)
+app.post("/madafree",multer,add_contact2)
 app.get("/get_all_contact/:name",get_contact)
 app.put("/update_contact/:name",multer,vue_contact)
 //req image
