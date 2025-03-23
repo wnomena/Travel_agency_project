@@ -10,18 +10,8 @@ console.log("hello node")
 const getAllMembers  = require("./circuit_manager_only_by_admin/get_all_member")
 // multer configuration
 require("./bd/connect_to_mongoose_bd")(mongoose)
-app.use(express.json())
-app.use(cors({
-    origin : ["https://wwww.caponmada.com","http://localhost:3000"],
-    methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Length', 'X-Response-Time'],
-    credentials: true,
-    preflightContinue: false,
-    optionsSuccessStatus : 200
-}))
+app.use(cors())
 app.use(cookie_parser())
-app.use(body_parser.urlencoded({extended : true}))
 app.use((req,res,next)=>{
     console.log(req.url)
     next()
