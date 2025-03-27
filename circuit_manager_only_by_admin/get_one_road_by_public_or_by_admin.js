@@ -5,7 +5,7 @@ module.exports = (app,child_road_model) =>{
             return res.status(400).json({message})
         }
         try {
-            child_road_model.find({_id : req.params.by_name}).then((a)=>{
+            child_road_model.find({name : btoa(req.params.by_name)}).then((a)=>{
                 if(a == "" || a == []){
                     const message = "Résultat vide"
                     return res.json({message})

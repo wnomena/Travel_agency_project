@@ -9,7 +9,7 @@ module.exports = (app,child_road_model) =>{
             return res.stauts(400).json({message})
         }
         try {
-            child_road_model.find({_id : req.params.name}).then((a)=>{
+            child_road_model.find({name : req.params.name}).then((a)=>{
                 if(a == "" || a == undefined){
                 const message = "Veuillez vérifier l'élément à supprimer"
                 return res.stauts(400).json({message})
