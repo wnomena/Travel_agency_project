@@ -21,6 +21,7 @@ module.exports = (app,child_road_model,parent_road_model) =>{
                     await child_road_model.find({name : btoa(array_list[1].value)}).then(async(c)=>{
                         if(c.length == 0){
                             child_road_model.create({
+                                identifiant : await require("../bd/schema/function_aut_increment_ident_for_commentary_model")(child_road_model),
                                 parent_ident_equal_to_child : array_list[0].value,
                                 name : btoa(array_list[1].value),
                                 description : btoa(array_list[2].value),

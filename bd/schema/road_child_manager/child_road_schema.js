@@ -5,6 +5,10 @@ const child_road_model = mongoose.model("child_road",new Schema({
         type : String,
         required : true
     },
+    identifiant : {
+        type : Number,
+        required : true
+    },
     name : {
         type : String,
         required : true
