@@ -1,7 +1,12 @@
+const Parent = require("../bd/mysql/parentRoad/modelParentRoad")
 module.exports = (app,parent_road_model) =>{
     app.get("/get_all/parent_circuit",(req,res)=>{
         try {
+            let test = new Parent()
              parent_road_model.find({}).then((a)=>{
+            test.getAll((error,result) => {
+                console.log(result[0].get("id"))
+            })
                 const message = "Les résultats de votre recherches"
                 let decrypted_value = []
                 for(let i = 0; i < a.length; i++){
@@ -15,7 +20,7 @@ module.exports = (app,parent_road_model) =>{
                         difficulty : atob(a[i].difficulty)
                     })
                 }
-                console.log(decrypted_value)
+                // console.log(decrypted_value)
                 return res.json({message,data : decrypted_value})
             })
         } catch (error) {
