@@ -24,7 +24,7 @@ CommentaryModel.prototype.GetAll = (id,result) => {
     })
 }
 CommentaryModel.prototype.insert = (data,result) => {
-    sql.query(`INSERT INTO commentary (mail,object,string) VALUES ("${data.mail}","${data.object}","${data.string}")`,(error,res) => {
+    sql.query(`INSERT INTO commentary (mail,string) VALUES ("${data.mail}","${data.string}")`,(error,res) => {
         if(error) {
             result(error,null)
             return

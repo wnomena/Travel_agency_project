@@ -4,17 +4,19 @@ module.exports = (req,res) => {
     try {
         const Contact = new contact()
         const table = []
-        Contact.getAll(function (error,result) {
+        Contact.getById(req.params.id,function (error,result) {
             result.forEach(element => {
                 table.push({
                     id : element.id,
                     name : element.name,
                     mail : element.mail,
                     object : element.object,
-                    corps : element.corps,
-                    vue : element.vue
+                    corps : element.corps
                 })
             });
+            Contact.update(table[0],function (err,result) {
+                console.log(result)
+            })
             return res.json({data : table})
         })
     } catch (error) {

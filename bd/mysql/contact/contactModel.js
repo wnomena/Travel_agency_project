@@ -22,6 +22,17 @@ ContactModel.prototype.getAll = (result) => {
         }
     })
 }
+ContactModel.prototype.insert = function (data,result) {
+    sql.query(`INSERT INTO contact (name,mail,object,corps,vue) VALUES ("${data.name}","${data.mail}","${data.object}","${data.corps}","${data.vue}")`,function (err,res) {
+        if(err) {
+            result(err,null)
+            return
+        } else {
+            result(null,res)
+            return
+        }
+    })
+}
 ContactModel.prototype.update = (data,result) => {
     sql.query(`UPDATE contact SET vue="${data.vue}" WHERE id="${data.id}"`, (error,res) => {
         if(error) {

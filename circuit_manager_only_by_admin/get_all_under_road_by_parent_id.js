@@ -1,55 +1,29 @@
-module.exports = (app,child_road_model) =>{
-    app.get("/:parent_circuit_id/public/way",(req,res)=>{
-        if(req.params.parent_circuit_id == undefined || req.params.parent_circuit_id == "0"){
-            child_road_model.find().then((a)=> {
-                const message ="Traitement reussi"
-                let decrypted_value = []
-                for(let i  = 0; i < a.length; i++){
-                    decrypted_value.push({
-                        identifiant : a[i].identifiant,
-                        parent_ident_equal_to_child: a[i].parent_ident_equal_to_child,
-                        name: atob(a[i].name),
-                        description: atob(a[i].description),
-                        distance: atob(a[i].distance),
-                        presentation_image: a[i].presentation_image, 
-                        sejour_delay: atob(a[i].sejour_delay),
-                        like_by_members: a[i].like_by_members,
-                        price : atob(a[i].price),
-                        difficulty : atob(a[i].difficulty)
+const child = require("../bd/mysql/childRoad/childModel")
+module.exports = (req,res) => {
+    try {
+        const Child = new child()
+        const value = []
+        Child.getAll(req.params.parent,(error,result) => {
+            if(result) {
+                result.forEach(element => {
+                    value.push({
+                        id : element.id,
+                        parent_id : element.parent_id,
+                        name : element.name,
+                        description : element.description,
+                        presentation_image : element.presentation_image,
+                        price : element.price,
+                        distance : element.distance,
+                        sejours_delay : element.sejours_delay,
+                        confort : element.confort
                     })
-                }
-                console.log(decrypted_value)
-                return res.json({message,data : decrypted_value})
-            })
-        }
-        else {
-            try {
-                child_road_model.find({parent_ident_equal_to_child : req.params.parent_circuit_id}).then(async(a)=>{
-                    const message ="Traitement reussi"
-                    let decrypted_value = []
-                    for(let i  = 0; i < a.length; i++){
-                        console.log(i)
-                        decrypted_value.push({
-                            identifiant : a[i].identifiant,
-                            parent_ident_equal_to_child: a[i].parent_ident_equal_to_child,
-                            name: atob(a[i].name),
-                            description: atob(a[i].description),
-                            distance: atob(a[i].distance),
-                            presentation_image: a[i].presentation_image,
-                            sejour_delay: atob(a[i].sejour_delay),
-                            like_by_members: a[i].like_by_members,
-                            price: atob(a[i].price),
-                            difficulty: atob(a[i].difficulty)
-                        })
-                    }
-                    console.log(decrypted_value)
-                    return res.json({message, data : decrypted_value})
-                })
-            } catch (error) {
-                const message = "Le serveur ne répond pas, veuillez réessayer  ultérieurement"
-                return res.status(500).json({message})
+                });
+                return res.json({data : value})
+            } else if(error) {
+                return res.status(400).json({message : "Bad request"})
             }
-        }
-    })
-}
-//fonctionnel fa misy
+        })
+    } catch (error) {
+        return res.status(500).json({message : "Server crached"})
+    }
+} 

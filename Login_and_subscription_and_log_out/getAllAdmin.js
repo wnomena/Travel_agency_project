@@ -1,14 +1,14 @@
-const commentary = require("../bd/mysql/commentaryModel/commentaryModel")
+const  {User} = require("../bd/mysql/user/modelUserAndMember")
 module.exports = function (req,res) {
     try {
-        const Commentary = new commentary()
-        Commentary.GetAll(function (err,result) {
+        const user = new User()
+        user.getAll(function (err,reust) {
             const data = []
-            result.forEach(element => {
+            reust.forEach(element => {
                 data.push({
-                    id : element.id,
+                    id: element.id,
                     mail : element.mail,
-                    string : element.string
+                    name : element.name
                 })
             });
             return res.json({data : data})

@@ -2,7 +2,7 @@ const commentary = require("../bd/mysql/commentaryModel/commentaryModel")
 module.exports = function (req,res) {
     try {
         const Commentary = new commentary()
-        Commentary.GetAll(function (err,result) {
+        Commentary.getById(req.params.id,function (err,result) {
             const data = []
             result.forEach(element => {
                 data.push({

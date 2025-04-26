@@ -1,53 +1,44 @@
-const multer = require("../multer_middleware")
-const { url } = require("../url")
-module.exports = (app,child_road_model,parent_road_model) =>{
-    app.post("/utilisateurs/add_unders/circuit/by_users",multer,(req,res)=>{
+const parent = require("../bd/mysql/childRoad/childModel")
+const split_join = require("../function_reutiliser/convertsppit")
+module.exports = async (req,res) => {
         try {
-        console.log(req.body)
-        let body = req.body
-        const array_list = [{name : "parent_ident_equal_to_child",value : body.parent_ident_equal_to_child},{name : "name",value : body.name},{name : "description",value : body.description},{name : "distance",value : body.distance},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "sejour_delay",value : `${body.sejours_delais_B} ${body.sejours_delais_E}`},{name : "price", value : body.price},{name : "difficulte",value : body.difficulty},{name : "confort", value : body.confort},{name : "period",value : `${body.period_B} ${body.period_E}`}]
-        for(let i of array_list){
-            console.log(i)
+        const body = req.body
+        console.log(JSON.parse(body.body))
+        const tableau = [{name : "id",value : body.id},{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort},{name : "parent_id",value : body.parent_id}]
+        const data = async () => {
+            return {
+                id : arr[0].value,
+                name : arr[1].value,
+                description : arr[2].value,
+                presentation_image : arr[3].value,
+                price : arr[4].value,
+                period : arr[5].value,
+                difficulty : arr[6].value,
+                distance : arr[7].value,
+                sejours_delay : arr[8].value,
+                confort  : arr[9].value,
+                parent_id : arr[10].value
+            }
+        }
+        const Parent = new parent()
+        for(let i of tableau){
+             console.log(i)
             if(i.value == "" || i.value == undefined){
                 const message = `Required field ${i.name}`
                 return res.status(400).json({message})
             }
         }
-            parent_road_model.find({identifiant : array_list[0].value}).then(async(a)=>{
-                if(a.length == 0){
-                    const message = "Non-existent data"
-                    return res.status(400).json({message})
-                }else{
-                    await child_road_model.find({name : btoa(array_list[1].value)}).then(async(c)=>{
-                        if(c.length == 0){
-                            child_road_model.create({
-                                identifiant : await require("../bd/schema/function_aut_increment_ident_for_commentary_model")(child_road_model),
-                                parent_ident_equal_to_child : array_list[0].value,
-                                name : btoa(array_list[1].value),
-                                description : btoa(array_list[2].value),
-                                distance : btoa(array_list[3].value),
-                                presentation_image : await require("../function_reutiliser/convertsppit")(array_list[4].value),
-                                sejour_delay : btoa(array_list[5].value),
-                                price : btoa(array_list[6].value),
-                                difficulty : btoa(array_list[7].value),
-                                confort : btoa(array_list[8].value),
-                                period : btoa(array_list[9].value)
-                            }).then((b)=>{
-                                const message = "Action done"
-                                return res.json({message})
-                            })
-                        }else{
-                            const message = "Use other name"
-                            return res.status(400).json({message})
-                        }
-                    })
-                }
-            })
-        } catch (error) {
-            const message = "Server crached"
-            return res.status(500).json({message,error})
-        }
-    })
+        Parent.insert(await data(),(error) => {
+            if(error) {
+                const message = "Bad request 400"
+                return res.status(400).json(message)
+            } else {
+                return res.json({message : "Action done"})
+            }
+        })       
+} catch (error) {
+    console.log(error)
+    const message = "Server crached"
+    return res.status(500).json({message,error})
 }
-//fonctionnel
-// parser misy olana
+}
