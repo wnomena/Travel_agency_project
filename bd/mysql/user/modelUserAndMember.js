@@ -3,7 +3,7 @@ const sql = require("../connexion")
 //All function for user
 function User() {}
 User.prototype.getById = (mail,result) => {
-    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,${config.KEY}) AS password FROM utilisateurs WHERE mail=${mail}`,function (error,res){
+    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,"${config.KEY}") AS password FROM utilisateurs WHERE mail="${mail}"`,function (error,res){
         if(error) {
             result(error,null)
             return
@@ -14,7 +14,7 @@ User.prototype.getById = (mail,result) => {
     })
 }
 User.prototype.getAll = (result) => {
-    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,${config.KEY}) AS password FROM utilisateurs`,function (error,res) {
+    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,"${config.KEY}") AS password FROM utilisateurs`,function (error,res) {
         if(error) {
             result(error,null)
             return
@@ -25,7 +25,7 @@ User.prototype.getAll = (result) => {
     })
 }
 User.prototype.insert = (data,result) => {
-    sql.query(`INSERT INTO utilisateurs (name,mail,AES_DECRYPT(password,${config.KEY})) VALUES ("${data.name}","${data.mail}","${data.password}")`,function (error,res) {
+    sql.query(`INSERT INTO utilisateurs (name,mail,AES_ENCRYPT(password,"${config.KEY}")) VALUES ("${data.name}","${data.mail}","${data.password}")`,function (error,res) {
         if(error) {
             result(error,null)
             return
@@ -49,7 +49,7 @@ User.prototype.delete = (id,result) => {
 //Members
 function Member() {}
 Member.prototype.getById = (mail,result) => {
-    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,${config.KEY}) AS password FROM members WHERE mail="${mail}"`,function (error,res){
+    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,"${config.KEY}") AS password FROM members WHERE mail="${mail}"`,function (error,res){
         if(error) {
             result(error,null)
             return
@@ -60,7 +60,7 @@ Member.prototype.getById = (mail,result) => {
     })
 }
 Member.prototype.getAll = (result) => {
-    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,${config.KEY}) AS password FROM members`,function (error,res) {
+    sql.query(`SELECT id,name,mail,AES_DECRYPT(password,"${config.KEY}") AS password FROM members`,function (error,res) {
         if(error) {
             result(error,null)
             return
@@ -71,7 +71,7 @@ Member.prototype.getAll = (result) => {
     })
 }
 Member.prototype.insert = (data,result) => {
-    sql.query(`INSERT INTO members (name,mail,AES_ENCRYPT(password,${config.KEY})) VALUES ("${data.name}","${data.mail}","${data.password}")`,function (error,res) {
+    sql.query(`INSERT INTO members (name,mail,AES_ENCRYPT(password,"${config.KEY}")) VALUES ("${data.name}","${data.mail}","${data.password}")`,function (error,res) {
         if(error) {
             result(error,null)
             return

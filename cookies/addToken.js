@@ -5,6 +5,7 @@ function AddCookies(req) {
     try {
         console.log(req.body)
         const create = jwt.sign({mail : "req.body.mail"},randomToken.toString(),{expiresIn : "1h"})
+        return create
     } catch (error) {
         console.log(error)
         throw new Error("try again");

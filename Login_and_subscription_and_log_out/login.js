@@ -8,15 +8,13 @@ module.exports = function (req,res) {
             password : req.body.password
         }
         user.getById(data.mail,function (error,result) {
-            result.forEach(element => {
+            console.log(error)
+            if(result.length !== 0) result.forEach(element => {
                 if(element.password == data.password) {
-                    addToken(req)
-                    return res.json({code : 1,message : "Connection done"})
-                } else if(element.password == data.password && data.password == `Caponmada.com${new Date().getFullYear()}`) {
-                    return res.json({code : 0,message : "Update required"})
-                }
+                    return res.json({message : "Connection done",token: addToken(req)})
+                } else return res.status(401).json({message : "Connection failed"})
             });
-            return res.status(401).json({code : -1, message : "Connection failed"})
+            else return res.status(400).json({message : "Use another mail"})
         })
     } catch (error) {
         return res.status(500).json({message : "Server crached"})
