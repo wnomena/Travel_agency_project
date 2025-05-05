@@ -6,18 +6,20 @@ module.exports = (req,res) => {
             let test = new Parent()
             let decrypted_value = []
             test.getById(req.params.id,(error,result) => {
-                result.forEach(element => {
-                    decrypted_value.push({
-                        id : element.id,
-                        name : element.name,
-                        description : element.description,
-                        presentation_image : element.presentation_image,
-                        price : element.price,
-                        period : element.period,
-                        difficulty : element.difficulty
-                    })
-                });
-                return res.json({data : decrypted_value})
+                if(result) {
+                    result.forEach(element => {
+                        decrypted_value.push({
+                            id : element.id,
+                            name : element.name,
+                            description : element.description,
+                            presentation_image : element.presentation_image,
+                            price : element.price,
+                            period : element.period,
+                            difficulty : element.difficulty
+                        })
+                    });
+                    return res.json({data : decrypted_value})
+                }
             })  
         } catch (error) {
             return res.status(500).json({message : "Server crached"})

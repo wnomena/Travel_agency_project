@@ -3,7 +3,6 @@ const split_join = require("../function_reutiliser/convertsppit")
 module.exports = async (req,res) => {
         try {
         const body = req.body
-        console.log(JSON.parse(body.body))
         const tableau = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "dificulter",value : body.difficulty},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "confort",value : body.confort}]
         const data = async () => {
             return {

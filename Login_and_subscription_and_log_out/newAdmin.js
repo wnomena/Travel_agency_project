@@ -9,17 +9,21 @@ module.exports = function (req,res) {
             password : `Caponmada.com${new Date().getFullYear()}`
         }
         user.getById(data.usermail,function (error,result) {
-            result.forEach(element => {
-                if(element) {
-                    user.insert(data,function (err,resp) {
-                        if(err) {
-                            return res.status(400).json({message : "Bad request"})
-                        } else {
-                            return res.json({message : "New user added"})
-                        }
-                    })
-                }
-            });
+            if(result.length > 0) {
+                result.forEach(element => {
+                    if(element) {
+                        return res.status(400).json({message : "Use another mail"})
+                    } else {
+                        user.insert(data,function (err,resp) {
+                            if(err) {
+                                return res.status(400).json({message : "Bad request"})
+                            } else {
+                                return res.json({message : "New user added"})
+                            }
+                        })
+                    }
+                });
+            } 
         })
     } catch (error) {
         return res.status(500).json({message : "Server crached"})

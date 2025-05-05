@@ -63,13 +63,12 @@ app.get("/admin/all",Members)
 app.delete("/admin/member/:id/delete",deleteMember)
 //Contact
 app.post("/contact",multer,contact)
-app.get("/contacts",contacts)
-app.get("/:id/contact",contact1)
+app.get("/admin/contacts",contacts)
+app.get("/admin/:id/contact",contact1)
 //commentary
-app.get("/commentaries",commentaries)
-app.get("/:id/commentary",commentary)
+app.get("/admin/commentaries",commentaries)
+app.get("/admin/:id/commentary",commentary)
 app.post("/commentary",multer,addCommentary)
 //Like
 app.post("/like",AddLike)
-
 app.listen(port,() => console.log("http://localhost:5000"))

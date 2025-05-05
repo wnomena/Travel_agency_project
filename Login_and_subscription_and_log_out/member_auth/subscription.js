@@ -8,16 +8,19 @@ module.exports = function (req,res) {
             mail : req.body.mail,
         }
         member.getById(data.mail,function (err,result) {
-            result.forEach(element => {
-                if(element.mail == data.mail) {
-                    return res.status(400).json({message : "email already used"})
-                }
-            });
-            member.insert(data,function (err,resp) {
-                if(!err) {
-                    return res.json({message : "Subscription done"})
-                }
-            })
+            if(result) {
+                result.forEach(element => {
+                    if(element.mail == data.mail) {
+                        return res.status(400).json({message : "email already used"})
+                    } else {
+                        member.insert(data,function (err,resp) {
+                            if(!err) {
+                                return res.json({message : "Subscription done"})
+                            }
+                        })
+                    }
+                });
+            }
         })
     } catch (error) {
         return res.status(500).json({message : "Server crached"})

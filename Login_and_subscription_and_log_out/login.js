@@ -1,5 +1,7 @@
+const { forceInt } = require("../bd/mysql/fonctionType")
 const {User} = require("../bd/mysql/user/modelUserAndMember")
 const addToken = require("../cookies/addToken")
+const { setCookies } = require("../cookies/private")
 module.exports = function (req,res) {
     try {
         const user = new User()
@@ -7,9 +9,9 @@ module.exports = function (req,res) {
             mail : req.body.mail,
             password : req.body.password
         }
+        console.log(data)
         user.getById(data.mail,function (error,result) {
-            console.log(error)
-            if(result.length !== 0) result.forEach(element => {
+            if(forceInt(result.length)) result.forEach(element => {
                 if(element.password == data.password) {
                     return res.json({message : "Connection done",token: addToken(req)})
                 } else return res.status(401).json({message : "Connection failed"})

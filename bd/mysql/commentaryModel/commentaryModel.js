@@ -12,7 +12,7 @@ CommentaryModel.prototype.getById = (id,result) => {
     })
 }
 
-CommentaryModel.prototype.GetAll = (id,result) => {
+CommentaryModel.prototype.GetAll = (result) => {
     sql.query(`SELECT * FROM commentary`,(error,res) => {
         if(error) {
             result(error,null)

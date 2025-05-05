@@ -1,10 +1,9 @@
 const jwt = require("jsonwebtoken")
-const randomToken = require("./private")
+const { config } = require("../bd/mysql/fonctionType")
 
 function AddCookies(req) {
     try {
-        console.log(req.body)
-        const create = jwt.sign({mail : "req.body.mail"},randomToken.toString(),{expiresIn : "1h"})
+        const create = jwt.sign({mail : req.body.mail},config.KEY.toString())
         return create
     } catch (error) {
         console.log(error)

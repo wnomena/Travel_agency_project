@@ -1,6 +1,11 @@
-const randomToken = [
-    [1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6],
-    ["a","z","e","r","t","y","u","i","o","p","q","s","d","f","g","h","j","k","l","m","w","x","c","v","b","n"],
-    ["A","Z","E","R","T","Y","U","I","O","P","Q","S","D","F","G","H","J","K","L","M","W","X","C","V","B","N"]
-]
-exports.module = randomToken
+
+const setCookies = function ({res,name,value}) {
+    res.cookies(`${name}`,`${value}`)
+}
+const getCookies = function ({req,name}) {
+    req.cookies(`${name}`)
+}
+module.exports = {
+    setCookies,
+    getCookies
+}

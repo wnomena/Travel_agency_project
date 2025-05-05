@@ -1,4 +1,4 @@
-const config = require("../fonctionType")
+const {config} = require("../fonctionType")
 const sql = require("../connexion")
 //All function for user
 function User() {}

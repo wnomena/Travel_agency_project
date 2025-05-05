@@ -5,4 +5,12 @@ const config = {
     PASS : "Caponmada.com2025",
     KEY : "azertyuiopqsdfghjklm"
 }
-module.exports = config
+const forceInt = function (res) {
+    try {
+        const a = parseInt(res.toString())
+        if(a) return 1
+    } catch (error) {
+        return 0
+    }
+}
+module.exports = {config,forceInt}
