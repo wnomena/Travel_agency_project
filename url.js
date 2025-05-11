@@ -1,2 +1,2 @@
-const url = "http://localhost:5000/get"
+const url = "https://travel-agency-project-vxkm.onrender.com/get"
 module.exports =  url

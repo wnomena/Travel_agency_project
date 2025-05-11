@@ -14,7 +14,7 @@ module.exports = (req,res) => {
         }
 
         Contact.insert(data,function (err,result) {
-
+            console.log(err,result)
             if(result) {
                 return res.json({message : "Request sent"})
             } else {

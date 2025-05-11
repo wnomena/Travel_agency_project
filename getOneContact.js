@@ -11,13 +11,12 @@ module.exports = (req,res) => {
                     name : element.name,
                     mail : element.mail,
                     object : element.object,
-                    corps : element.corps
+                    corps : element.corps,
+                    vue : element.vue
                 })
             });
-            Contact.update(table[0],function (err,result) {
-                console.log(result)
-            })
-            return res.json({data : table})
+            console.log(table)
+            return res.json({data : table})  
         })
     } catch (error) {
         res.status(500).json({message : "Server crached"})

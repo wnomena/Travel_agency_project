@@ -6,8 +6,20 @@ ContactModel.prototype.getById = (id,result) => {
             result(error,null)
             return
         } else {
+            res.forEach(element => {
+                console.lo
+            if(element.vue == 0) {
+            sql.query(`UPDATE contact SET vue="1" WHERE id="${element.id}"`, (_error,_res) => {
+            console.log(res)
             result(null,res)
             return
+                    })
+                } else {
+                    result(null,res)
+                    return
+                }
+            } 
+        );
         }
     })
 }
@@ -34,7 +46,8 @@ ContactModel.prototype.insert = function (data,result) {
     })
 }
 ContactModel.prototype.update = (data,result) => {
-    sql.query(`UPDATE contact SET vue="${data.vue}" WHERE id="${data.id}"`, (error,res) => {
+        if(data.vue == 0) {
+            sql.query(`UPDATE contact SET vue="1" WHERE id="${data}"`, (error,res) => {
         if(error) {
             result(error,null)
             return
@@ -43,5 +56,6 @@ ContactModel.prototype.update = (data,result) => {
             return
         }
     })
+    } 
 }
 module.exports = ContactModel
