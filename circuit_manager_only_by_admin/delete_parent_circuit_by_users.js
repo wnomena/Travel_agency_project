@@ -7,12 +7,11 @@ module.exports = (req,res) => {
             if(error) {
                 return res.status(400).json({message : "Bad request"})
             } else {
-                Parent.delete(req.params.id,function (error2,result2) {
-                    if(!error) {
+                console.log(req.params.id)
+                Parent.delete(req.params.id,async function (error2,result2) {
                         const link = result[0].presentation_image
-                        unlink_function(link.split("/")[link.length - 1])
+                        await unlink_function(link.split("/")[link.split("/").length - 1])
                         return res.json({message : "Action done"})
-                    }
                 })
             }
         })

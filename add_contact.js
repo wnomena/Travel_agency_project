@@ -2,7 +2,7 @@ const contact = require("./bd/mysql/contact/contactModel")
 const { main } = require("./sendmail")
 module.exports = (req,res) => {
     console.log(req.body.mail)
-    main(req.body.name,req.body.mail,req.body.object,req.body.corps,"sandaarnaud@gmail.com")
+    // main(req.body.name,req.body.mail,req.body.object,req.body.corps,"sandaarnaud@gmail.com")
     try {
         const Contact = new contact()
         const data = {
@@ -12,11 +12,14 @@ module.exports = (req,res) => {
             corps : req.body.corps,
             vue : false
         }
+
         Contact.insert(data,function (err,result) {
-            if(!err) {
+
+            if(result) {
                 return res.json({message : "Request sent"})
             } else {
-                return res.status(400).json({message : "Bad request"})
+                console.log(err)
+                return res.status(400).json({message : "Request already sent"})
             }
         })
     } catch (error) {

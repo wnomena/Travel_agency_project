@@ -8,9 +8,9 @@ module.exports = (req,res) => {
                 return res.status(400).json({message : "Bad request"})
             } else {
                 Parent.delete(req.params.id,function (error2,result2) {
-                    if(!error) {
+                    if(result2) {
                         const link = result[0].presentation_image
-                        unlink_function(link.split("/")[link.length - 1])
+                        unlink_function(link.split("/")[link.split("/").length - 1])
                         return res.json({message : "Action done"})
                     }
                 })

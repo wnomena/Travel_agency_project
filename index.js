@@ -37,8 +37,8 @@ const addCommentary = require("./commentary_by_member/add_commentary_by_member")
 const AddLike = require("./likeByMember.js/AddLikeByMember")
 const deleteMember = require("./Login_and_subscription_and_log_out/member_auth/deleteMember")
 const adminMiddleware = require("./middleware/jsonverify")
-
-app.use("/admin/",adminMiddleware)
+const Image = require("./circuit_manager_only_by_admin/get_image")
+// app.use("/admin/",adminMiddleware)
 app.get("/parent",parent)
 app.get("/:id/parent",parentId)
 app.post("/admin/insert/parent",multer,insertParent)
@@ -71,4 +71,6 @@ app.get("/admin/:id/commentary",commentary)
 app.post("/commentary",multer,addCommentary)
 //Like
 app.post("/like",AddLike)
+//get image
+app.get("/get/:name",Image)
 app.listen(port,() => console.log("http://localhost:5000"))

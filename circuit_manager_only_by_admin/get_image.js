@@ -1,7 +1,6 @@
 const path = require("node:path")
 const fs = require("node:fs")
-module.exports = (app) => {
-    app.get("/get/:name",(req,res)=> {
+module.exports = (req,res)=> {
         const imageName = req.params.name;
         console.log(imageName)
         const imagePath = path.join(__dirname, '../file', imageName);
@@ -16,6 +15,5 @@ module.exports = (app) => {
           console.error(error);
           res.status(500).send('Server error');
         }
-      });
-    }
+      };
     

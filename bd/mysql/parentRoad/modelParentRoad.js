@@ -36,24 +36,14 @@ ParentRoad.prototype.insert = (data,result) => {
 }
 ParentRoad.prototype.delete = (id,result) => {
     sql.query(`DELETE FROM parent_road WHERE id="${id}"`,(error,res) => {
-        if(error) {
-            result(error,null)
+            result(error,res)
             return
-        } else {
-            result(null,res)
-            return
-        }
     })
 }
 ParentRoad.prototype.update = (data,result) => {
     sql.query(`UPDATE parent_road  SET name="${data.name}",description="${data.description}",presentation_image="${data.presentation_image}",price="${data.price}",period="${data.period}",difficulty="${data.difficulty}" WHERE id="${data.id}"`,(error,res) => {
-        if(error) {
-            result(error,null)
+            result(error,res)
             return
-        } else {
-            result(res,null)
-            return
-        }
     })
 }
 module.exports = ParentRoad

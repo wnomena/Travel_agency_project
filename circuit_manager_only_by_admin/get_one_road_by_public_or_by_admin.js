@@ -3,9 +3,11 @@ module.exports = (req,res) => {
     try {
         const Child = new child()
         const value = []
-        Child.getAll(req.params.id,(error,result) => {
+        Child.getById(req.params.id,(error,result) => {
+            console.log("requete enffant")
             if(result) {
                 result.forEach(element => {
+                    console.log(element)
                     value.push({
                         id : element.id,
                         parent_id : element.parent_id,
@@ -14,8 +16,11 @@ module.exports = (req,res) => {
                         presentation_image : element.presentation_image,
                         price : element.price,
                         distance : element.distance,
-                        sejours_delay : element.sejours_delay,
-                        confort : element.confort
+                        sejour_delay : element.sejour_delay,
+                        confort : element.confort,
+                        period : element.period,
+                        difficulty : element.difficulty,
+                        carte : element.carte
                     })
                 });
                 return res.json({data : value})
@@ -26,4 +31,4 @@ module.exports = (req,res) => {
     } catch (error) {
         return res.status(500).json({message : "Server crached"})
     }
-} 
+}

@@ -13,7 +13,7 @@ module.exports = (req,res) => {
         Commentary.insert(data,function (err,resp) {
             if(resp) {
                 Like.insert(data,function (erro,resu) {
-                    if(resu && resp) {
+                    if(resu) {
                         return res.json({message : "Action done"})
                     } else if(erro) {
                         return res.status(400).json({message : "Bad request"})
