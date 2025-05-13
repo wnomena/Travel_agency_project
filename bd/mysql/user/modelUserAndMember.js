@@ -9,6 +9,7 @@ User.prototype.getById = (mail,result) => {
             return
         } else {
             result(null,res)
+            console.log(res)
             return
         }
     })
@@ -32,6 +33,24 @@ User.prototype.insert = (data,result) => {
         } else {
             result(null,res)
             return
+        }
+    })
+}
+User.prototype.update = (data,result) => {
+    sql.query(`SELECT id,mail,name,AES_DECRYPT(password,"${config.KEY}") AS password FROM utilisateurs WHERE mail="${data.mail}"`,function(err,resp) {
+        if(resp) {
+            resp.forEach(element => {
+               if(element.password == data.password) {
+                sql.query(`UPDATE utilisateurs SET password=AES_ENCRYPT("${data.new}","${config.KEY}") WHERE mail="${data.mail}"`,function (error3,result3) {
+                result(error3,result3)
+                })
+            } else {
+                result("wrong password",null)
+            }
+            });
+        } else {
+            console.log(err)
+            result(err,null)
         }
     })
 }
@@ -82,13 +101,21 @@ Member.prototype.insert = (data,result) => {
     })
 }
 Member.prototype.update = (data,result) => {
-    sql.query(`UPDATE members SET password=AES_ENCRYPT(password,"${data.password}") WHERE id="${data.id}"`,(error,res) => {
-        if(error) {
-            result(error,null)
-            return
+    sql.query(`SELECT id,mail,name,AES_DECRYPT(password,"${config.KEY}") AS password FROM members WHERE mail="${data.mail}"`,function(err,resp) {
+        if(resp) {
+            console.log(resp)
+            resp.forEach(element => {
+               if(element.password == data.password) {
+                sql.query(`UPDATE members SET password=AES_ENCRYPT("${data.new}","${config.KEY}") WHERE mail="${data.mail}"`,function (error3,result3) {
+                console.log(result3)
+                    result(error3,result3)
+                })
+            } else {
+                result("wrong password",null)
+            }
+            });
         } else {
-            result(res,null)
-            return
+            result(err,null)
         }
     })
 }
