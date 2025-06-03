@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
       // send mail with defined transport object
       return await transporter.sendMail({
         from: '"CAPONMADA noreply" <MS_RI1MPK@noreply.caponmada.com>', // sender address
-        to: `${mail2}`, // list of receivers
+        to: `contact@caponmada.com`, // list of receivers
         subject: "New client", // Subject line
         text: ``, // plain text body
         html: `<h1>New task for ${name} with mail : ${mail} </h1>  \n <h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
