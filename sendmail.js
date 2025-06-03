@@ -4,8 +4,8 @@ const transporter = nodemailer.createTransport({
   host: "smtp.mailersend.net",
   port: 587,
   auth: {
-    user: "MS_m62Ww2@trial-0r83ql37r3pgzw1j.mlsender.net",
-    pass: "mssp.37N3n3X.zr6ke4ne7r94on12.ReCnLgE",
+    user: "MS_RI1MPK@noreply.caponmada.com",
+    pass: "mssp.YgXsTGS.0p7kx4xnv6vg9yjr.x41cTIV",
   },
 });
 
@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   try {
       // send mail with defined transport object
       const info = await transporter.sendMail({
-        from: '"Service client CAPONMADA" <MS_m62Ww2@trial-0r83ql37r3pgzw1j.mlsender.net>', // sender address
-        to: "sandaarnaud@gmail.com", // list of receivers
+        from: '"Service client CAPONMADA" <MS_RI1MPK@noreply.caponmada.com>', // sender address
+        to: "contact@caponmada.com", // list of receivers
         subject: "New client", // Subject line
         text: `New task for ${name}<${mail}>`, // plain text body
         html: `<h5>Object of mail : \n ${object}</h5><p>Corps of mail : ${corps}</p>`, // html body
