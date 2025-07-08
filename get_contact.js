@@ -1,14 +1,23 @@
-const { contact_model } = require("./bd/schema/contact_schema")
+const contact = require("./bd/mysql/contact/contactModel")
 
 module.exports = (req,res) => {
     try {
-        contact_model.find().then((respp) => {
-            for(let i of respp) {
-                if(i._id == req.params.name.toString()) return res.json({data : [i]})
-            }
-        return res.json({data : [...respp]})
+        const Contact = new contact()
+        const table = []
+        Contact.getAll(function (error,result) {
+            result.forEach(element => {
+                table.push({
+                    id : element.id,
+                    name : element.name,
+                    mail : element.mail,
+                    object : element.object,
+                    corps : element.corps,
+                    vue : element.vue
+                })
+            });
+            return res.json({data : table})
         })
     } catch (error) {
-        res.status(500).json({err : error})
+        res.status(500).json({message : "Server crached"})
     }
 }

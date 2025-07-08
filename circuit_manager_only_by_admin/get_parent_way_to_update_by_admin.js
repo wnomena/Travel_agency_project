@@ -1,47 +1,26 @@
-module.exports = (app,child_road_model) =>{
-    app.get("/public_get/parent_way/one_road/:by_name",(req,res)=>{
-        if(!req.params.by_name){
-            console.log(req.params.by_name)
-            const message = "Champs requis"
-            return res.status(400).json({message})
-        }
+const Parent = require("../bd/mysql/parentRoad/modelParentRoad")
+const AddCookies = require("../cookies/addToken")
+module.exports = (req,res) => {
         try {
-            child_road_model.find({identifiant : req.params.by_name}).then((a)=>{
-                if(a == "" || a == []){
-                    const message = "Résultat vide"
-                    return res.json({message})
-                }else if(a.length == 1){
-                    const message = "On a trouver un résultat"
-                    let decrypted_value = []
-                for(let i = 0; i < a.length; i++){
-                    decrypted_value.push({
-                        identifiant : a[i].identifiant,
-                        name : atob(a[i].name),
-                        about_all_road : atob(a[i].about_all_road),
-                        presentation_image : a[i].presentation_image,
-                        price : atob(a[i].price),
-                        period : atob(a[i].period)
-                    })
-                    return res.json({message,data : decrypted_value})}
-                }else{
-                    const message = "Les résultats de votre recherche"
-                    let decrypted_value = []
-                for(let i = 0; i < a.length; i++){
-                    decrypted_value.push({
-                        identifiant : a[i].identifiant,
-                        name : atob(a[i].name),
-                        about_all_road : atob(a[i].about_all_road),
-                        presentation_image : a[i].presentation_image,
-                        price : atob(a[i].price),
-                        period : atob(a[i].period)
-                    })
+            AddCookies(req,res)
+            let test = new Parent()
+            let decrypted_value = []
+            test.getById(req.params.id,(error,result) => {
+                if(result) {
+                    result.forEach(element => {
+                        decrypted_value.push({
+                            id : element.id,
+                            name : element.name,
+                            description : element.description,
+                            presentation_image : element.presentation_image,
+                            price : element.price,
+                            period : element.period,
+                            difficulty : element.difficulty
+                        })
+                    });
+                    return res.json({data : decrypted_value})
                 }
-                    return res.json({message,data : decrypted_value})
-                }
-            })
+            })  
         } catch (error) {
-            const message = "Le serveur ne répon pas, veuillez réessayer  ultérieurement"
-            return res.status(500).json({message,error})
-        }
-    })
-}
+            return res.status(500).json({message : "Server crached"})
+}}

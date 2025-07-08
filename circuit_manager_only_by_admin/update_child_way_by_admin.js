@@ -1,78 +1,70 @@
-const multer = require("../multer_middleware")
-module.exports = (app,parent_road_model) =>{
-    app.put("/utilisateurs/update_child_way/by_user",multer,(req,res)=>{
+const child = require("../bd/mysql/childRoad/childModel")
+const split_join = require("../function_reutiliser/convertsppit")
+const unlink_function = require("../unlink_function")
+module.exports = async (req,res) => {
         const body = req.body
-         const arr = [{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort}]
-        let name = btoa(arr[0].value);
-        let description = btoa(arr[1].value);
-        let presentation_image = btoa(arr[2].value);
-        let price = btoa(arr[3].value);
-        let period = btoa(arr[4].value)
-        let difficulty = btoa(arr[5].value)
-        let distance = btoa(arr[6].value);
-        let sejours_delay = btoa(arr[7].value);
-        let confort  = btoa(arr[8].value);
+        const arr = [{name : "id",value : body.id},{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort},{name : "parent_id",value : body.parent_id}]
         try {
-            parent_road_model.find({_id : req.body._id}).then(async(a)=>{
-            console.log(a)
-                for(let x = 0; x < arr.length; x++){
-                    if(arr[x].value == undefined || arr[x].value == ""){
-                        switch (x) {
-                            case 0:
-                                name = a[0].name
-                                break;
-                            case 1:
-                                description = a[0].description
-                                break;
-                            case 2:
-                                presentation_image = a[0].presentation_image
-                                break;
-                            case 3 : 
-                                price = a[0].price
-                                break;
-                            case 4:
-                                period = a[0].period
-                                break;
-                            case 5:
-                                difficulty = a[0].difficulty
-                                break;
-                            case 6:
-                                distance = a[0].distance
-                                break;
-                            case 7:
-                                sejours_delay = a[0].sejours_delay
-                                break;
-                            default:
-                                confort = a[0].confort
-                        }
+            let Parent = new child()
+            for(let i of arr){
+               if(i.value == "" || i.value == undefined){
+                   const message = `Required field ${i.name}`
+                   return res.status(400).json({message})
+               } else if(i.name == "about_all_road" && i.value.length < 300) {
+                   return res.status(400).json({message : "Put more Description"})
+               }
+           }
+            Parent.getById(arr[0].value,async function (error,result) {
+                if(error) {
+                   return res.status(400).json({message : "Bad request"})
+                } else {
+                   for(let i of result) {
+                        unlink_function(i.presentation_image.split("/")[i.presentation_image.split("/").length - 1])
                     }
-                     else if(x == 2 && arr[x].value) {
-                        unlink_function(a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1])
-                        presentation_image = `${url}/get/${arr[x].value}`
-                     }
+                    const data = {
+                        id : arr[0].value,
+                        name : arr[1].value,
+                        description : arr[2].value,
+                        presentation_image : split_join(arr[3].value),
+                        price : arr[4].value,
+                        period : arr[5].value,
+                        difficulty : arr[6].value,
+                        distance : arr[7].value,
+                        sejours_delay : arr[8].value,
+                        confort  : arr[9].value,
+                        parent_id : arr[10].value
+                    }
+                    Parent.update(data,function (error) {
+                        if(error) {
+                            const message = "Bad request"
+                            return res.status(400).json(message)
+                        } else {
+                            const message = "Action done"
+                            return res.json({message})
+                        }
+                    })
+
                 }
-                parent_road_model.findByIdAndUpdate(a[0]._id,{name : name, description : description, presentation_image : presentation_image,price : price,period : period, difficulty : difficulty, distance : distance,sejours_delay : sejours_delay, confort : confort}).then((a)=>{
-                    const message = "Mopdification done"
-                    return res.json({message})
-                })
             })
         } catch (error) {
-            const message = "Server crached"
+            console.log(error)
+            const message = "Server crached 1"
             return res.status(500).json({message,error})
         }
+    }
+    //-------------------
+    // const data = {
+    //     id : arr[0].value,
+    //     name : arr[1].value,
+    //     description : arr[2].value,
+    //     presentation_image : split_join(arr[3].value),
+    //     price : arr[4].value,
+    //     period : arr[5].value,
+    //     difficulty : arr[6].value,
+    //     distance : arr[7].value,
+    //     sejours_delay : arr[8].value,
+    //     confort  : arr[9].value,
+    //     parent_id : arr[10].value
+    // }
 
-    })
-}
-/*
-/utilisateurs/update_child_way/by_user
-{
-                        description : btoa(body.description),
-                        distance : btoa(body.distance),
-                        presentation_image : `${url}/${req.file.filename}`,
-                        sejours_delay : btoa(body.sejours_delay),
-                        price : btoa(body.price),
-                        difficulty : btoa(body.difficulty),
-                        confort : btoa(body.confort),
-                        period : btoa(body.period)
-                    }
-*/
+    // const arr = [{name : "id",value : body.id},{name : "name",value : body.name},{name : "about_all_road",value : body.desc},{name : "presentation_image",value : req.file ? req.file.filename : undefined},{name : "prix", value : body.price},{name : "period", value : `${body.period_B} ${body.period_E}`},{name : "dificulter",value : body.difficulty},{name : "distance", value : body.distance},{name : "sejours_delay", value : `${body.sejours_delay_B} ${body.sejours_delay_E}`}, {name : "confort", value : body.confort},{name : "parent_id",value : body.parent_id}]

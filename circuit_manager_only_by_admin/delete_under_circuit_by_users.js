@@ -1,28 +1,23 @@
-function find_one_and_unlink(name) {
-    fs.unlink(`./file/${name}`,(err) => console.log(err))
-}
-const fs = require("fs")
-module.exports = (app,child_road_model) =>{
-    app.delete("/utilisateurs/delete/child_road/:name",(req,res)=>{
-        if(req.params.name == undefined || req.params.name == ""){
-            const message = "Veuillez vérifier l'élément à supprimer"
-            return res.stauts(400).json({message})
-        }
-        try {
-            child_road_model.find({_id : req.params.name}).then((a)=>{
-                if(a == "" || a == undefined){
-                const message = "Veuillez vérifier l'élément à supprimer"
-                return res.stauts(400).json({message})
-                }
-                child_road_model.deleteOne({_id : req.params.name}).then((b)=>{
-                    find_one_and_unlink(a[0].presentation_image.split("/")[a[0].presentation_image.split("/").length - 1])
-                    const message = "Action effectuer avec succès"
-                    return res.json({message})
+const parent = require("../bd/mysql/childRoad/childModel")
+const unlink_function = require("../unlink_function")
+module.exports = (req,res) => {
+    try {
+        const Parent = new parent()
+        Parent.getById(req.params.id,function (error,result) {
+            if(error) {
+                return res.status(400).json({message : "Bad request"})
+            } else {
+                Parent.delete(req.params.id,function (error2,result2) {
+                    if(result2) {
+                        const link = result[0].presentation_image
+                        unlink_function(link.split("/")[link.split("/").length - 1])
+                        return res.json({message : "Action done"})
+                    }
                 })
-            })
-        } catch (error) {
-            const message = "Le serveur ne répon pas, veuillez réessayer  ultérieurement"
-            return res.status(500).json({message,error})
-        }
-    })
+            }
+        })
+    } catch (error) {
+        const message = "Server crached"
+        return res.status(500).json(message)
+    }
 }

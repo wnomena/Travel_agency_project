@@ -1,7 +1,7 @@
 const { unlink } = require("fs")
-module.exports = (name) => {
+module.exports = async (name) => {
     try {
-        unlink(`${_dirname}/../file/${name}`,() => {
+        await unlink(`${_dirname}/file/${name}`,() => {
             console.log("file deleted")
             return true
         })
