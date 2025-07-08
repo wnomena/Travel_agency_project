@@ -2,7 +2,7 @@ const contact = require("./bd/mysql/contact/contactModel")
 const { main } = require("./sendmail")
 module.exports = (req,res) => {
     console.log(req.body.mail)
-    // main(req.body.name,req.body.mail,req.body.object,req.body.corps,"sandaarnaud@gmail.com")
+    main(req.body.name,req.body.mail,req.body.object,req.body.corps)
     try {
         const Contact = new contact()
         const data = {
