@@ -5,11 +5,12 @@ function User() {}
 User.prototype.getById = (mail,result) => {
     sql.query(`SELECT id,name,mail,AES_DECRYPT(password,"${config.KEY}") AS password FROM utilisateurs WHERE mail="${mail}"`,function (error,res){
         if(error) {
+            console.log(error)
             result(error,null)
             return
         } else {
+            console.log(res )
             result(null,res)
-            console.log(res)
             return
         }
     })

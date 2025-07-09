@@ -11,7 +11,8 @@ module.exports = function (req,res) {
         }
         console.log(data)
         user.getById(data.mail,function (error,result) {
-            if(forceInt(result.length)) result.forEach(element => {
+            console.log(result)
+            if(!error) result.forEach(element => {
                 if(element.password == data.password) {
                     return res.json({message : "Connection done",token: addToken(req)})
                 } else return res.status(401).json({message : "Connection failed"})
