@@ -10,7 +10,7 @@ module.exports = function (req,res) {
             password : req.body.password
         }
         user.getById(data.mail,function (error,result) {
-            if(forceInt(result.length)) result.forEach(element => {
+            if(forceInt(result ? result.length : null)) result.forEach(element => {
                 if(element.password == data.password) {
                     return res.json({message : "Connection done"})
                 } else return res.status(401).json({message : "Connection failed"})
