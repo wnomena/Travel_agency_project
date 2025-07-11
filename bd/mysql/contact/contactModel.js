@@ -35,14 +35,8 @@ ContactModel.prototype.getAll = (result) => {
     })
 }
 ContactModel.prototype.insert = function (data,result) {
-    sql.query(`INSERT INTO contact (name,mail,object,corps,vue) VALUES ("${data.name}","${data.mail}","${data.object}","${data.corps}","${data.vue}")`,function (err,res) {
-        if(err) {
-            result(err,null)
-            return
-        } else {
-            result(null,res)
-            return
-        }
+    sql.query(`call tsy_mande_le_1("${data.mail}","${data.name}","${data.corps}","${data.object}",@result);  call read_contact_procedure_return`, (err,res) => {
+        result(null,res[1][0].result)
     })
 }
 ContactModel.prototype.update = (data,result) => {

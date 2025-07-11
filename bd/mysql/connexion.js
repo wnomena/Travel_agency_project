@@ -5,6 +5,7 @@ const connexion = mysql.createPool({
     database : config.NAME,
     user : config.USER,
     password : config.PASS,
-    host : config.HOST
+    host : config.HOST,
+    multipleStatements : true
 })
 module.exports = connexion
