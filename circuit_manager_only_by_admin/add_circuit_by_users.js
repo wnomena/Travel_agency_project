@@ -11,7 +11,7 @@ module.exports = async (req,res) => {
                 description : tableau[1].value,
                 presentation_image : split_join(tableau[2].value),
                 price : tableau[3].value,
-                period : tableau[5].value
+                period : tableau[4].value
             }
         }
         const Parent = new parent()

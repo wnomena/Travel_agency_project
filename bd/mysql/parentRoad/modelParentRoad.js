@@ -24,7 +24,7 @@ ParentRoad.prototype.getAll = (result) => {
     })
 }
 ParentRoad.prototype.insert = (data,result) => {
-    sql.query(`INSERT INTO parent_road (name,description,presentation_image,price,period,difficulty) VALUES ("${data.name}","${data.description}","${data.presentation_image}","${data.price}","${data.period}","${data.difficulty}")`,(error,res) => {
+    sql.query(`INSERT INTO parent_road (name,description,presentation_image,price,period) VALUES ("${data.name}","${data.description}","${data.presentation_image}","${data.price}","${data.period}")`,(error,res) => {
         if(error) {
             result(error,null)
             return
@@ -41,7 +41,7 @@ ParentRoad.prototype.delete = (id,result) => {
     })
 }
 ParentRoad.prototype.update = (data,result) => {
-    sql.query(`UPDATE parent_road  SET name="${data.name}",description="${data.description}",presentation_image="${data.presentation_image}",price="${data.price}",period="${data.period}",difficulty="${data.difficulty}" WHERE id="${data.id}"`,(error,res) => {
+    sql.query(`UPDATE parent_road  SET name="${data.name}",description="${data.description}",presentation_image="${data.presentation_image}",price="${data.price}",period="${data.period}" WHERE id="${data.id}"`,(error,res) => {
             result(error,res)
             return
     })

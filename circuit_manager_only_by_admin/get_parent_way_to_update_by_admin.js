@@ -14,8 +14,7 @@ module.exports = (req,res) => {
                             description : element.description,
                             presentation_image : element.presentation_image,
                             price : element.price,
-                            period : element.period,
-                            difficulty : element.difficulty
+                            period : element.period
                         })
                     });
                     return res.json({data : decrypted_value})
