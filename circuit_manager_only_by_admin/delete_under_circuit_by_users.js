@@ -10,7 +10,7 @@ module.exports = (req,res) => {
                 Parent.delete(req.params.id,function (error2,result2) {
                     if(result2) {
                         const link = result[0].presentation_image
-                        unlink_function(link.split("/")[link.split("/").length - 1])
+                        unlink_function(link)
                         return res.json({message : "Action done"})
                     }
                 })

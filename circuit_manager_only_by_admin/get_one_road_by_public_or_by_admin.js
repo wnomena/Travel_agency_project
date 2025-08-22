@@ -13,7 +13,7 @@ module.exports = (req,res) => {
                         parent_id : element.parent_id,
                         name : element.name,
                         description : element.description,
-                        presentation_image : element.presentation_image,
+                        presentation_image : url + element.presentation_image,
                         price : element.price,
                         distance : element.distance,
                         sejour_delay : element.sejour_delay,

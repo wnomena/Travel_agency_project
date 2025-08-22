@@ -9,7 +9,7 @@ module.exports = async (req,res) => {
             return {
                 name : tableau[1 - 1].value,
                 description : tableau[2 - 1].value,
-                presentation_image : await split_join(tableau[3 - 1].value),
+                presentation_image : tableau[3 - 1].value,
                 price : tableau[4 - 1].value,
                 period : tableau[5 - 1].value,
                 difficulty : tableau[6 - 1].value,

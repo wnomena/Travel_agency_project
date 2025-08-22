@@ -1,4 +1,5 @@
 const Parent = require("../bd/mysql/parentRoad/modelParentRoad")
+const url = require("../url")
 const AddCookies = require("../cookies/addToken")
 module.exports = (req,res) => {
         try {
@@ -12,7 +13,7 @@ module.exports = (req,res) => {
                             id : element.id,
                             name : element.name,
                             description : element.description,
-                            presentation_image : element.presentation_image,
+                            presentation_image : url + element.presentation_image,
                             price : element.price,
                             period : element.period
                         })

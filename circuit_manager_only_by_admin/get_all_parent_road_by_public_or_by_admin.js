@@ -1,8 +1,10 @@
 const { forceInt } = require("../bd/mysql/fonctionType")
 const Parent = require("../bd/mysql/parentRoad/modelParentRoad")
 const { getCookies } = require("../cookies/private")
+const url = require("../url")
 module.exports = (req,res) => {
         try {
+            console.log(req.header.url)
             let test = new Parent()
             let decrypted_value = []
             test.getAll((error,result) => {
@@ -13,7 +15,7 @@ module.exports = (req,res) => {
                             id : element.id,
                             name : element.name,
                             description : element.description,
-                            presentation_image : element.presentation_image,
+                            presentation_image : url + element.presentation_image,
                             price : element.price,
                             period : element.period,
                             difficulty : element.difficulty

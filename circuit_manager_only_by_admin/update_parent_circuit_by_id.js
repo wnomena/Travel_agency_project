@@ -20,13 +20,13 @@ module.exports = async (req,res) => {
                    return res.status(400).json({message : "Bad request"})
                 } else {
                    for(let i of result) {
-                        unlink_function(i.presentation_image.split("/")[i.presentation_image.split("/").length - 1])
+                        unlink_function(i.presentation_image)
                     }
                     const data = {
                         id : arr[0].value,
                         name : arr[1].value,
                         description : arr[2].value,
-                        presentation_image : await split_join(arr[3].value),
+                        presentation_image : arr[3].value,
                         price : arr[4].value,
                         period : arr[5].value
                     }

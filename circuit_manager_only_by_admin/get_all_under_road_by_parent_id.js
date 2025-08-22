@@ -1,4 +1,5 @@
 const child = require("../bd/mysql/childRoad/childModel")
+const url = require("../url")
 module.exports = (req,res) => {
     try {
         const Child = new child()
@@ -12,7 +13,7 @@ module.exports = (req,res) => {
                         parent_id : element.parent_id,
                         name : element.name,
                         description : element.description,
-                        presentation_image : element.presentation_image,
+                        presentation_image : url + element.presentation_image,
                         price : element.price,
                         distance : element.distance,
                         sejours_delay : element.sejours_delay,
