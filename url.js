@@ -1,2 +1,2 @@
-const url = "https://services-client.caponmada.com/get"
+const url = "https://travel-agency-project-vxkm.onrender.com/get"
 module.exports =  url
